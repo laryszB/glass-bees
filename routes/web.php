@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ApiaryController;
+use App\Models\Apiary;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Apiaries
+Route::get('/', [ApiaryController::class, 'index']);
+
+//Single apiary
+Route::get('/apiaries/{apiary}', [ApiaryController::class, 'show']);
