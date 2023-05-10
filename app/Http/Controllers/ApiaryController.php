@@ -22,7 +22,7 @@ class ApiaryController extends Controller
      */
     public function create()
     {
-        //
+        return view('apiaries.create');
     }
 
     /**
