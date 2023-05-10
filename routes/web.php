@@ -21,6 +21,9 @@ Route::get('/', [ApiaryController::class, 'index']);
 // Show create apiary form
 Route::get('/apiaries/create', [ApiaryController::class, 'create']);
 
+// Store apiary data
+Route::post('/apiaries', [ApiaryController::class, 'store']);
+
 //Single apiary
 Route::get('/apiaries/{apiary}', [ApiaryController::class, 'show']);
 

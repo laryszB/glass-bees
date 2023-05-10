@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('city');
             $table->string('country');
             $table->string('zip_code', 20);
-            $table->decimal('latitude', 8, 6);
-            $table->decimal('longitude', 9, 6);
+            $table->decimal('latitude', 8, 6)->nullable();
+            $table->decimal('longitude', 9, 6)->nullable();
             $table->timestamps();
         });
     }

@@ -10,7 +10,8 @@
             <p class="mb-4">Pasieka zostanie przypisana do Twojego konta</p>
         </header>
 
-        <form action="">
+        <form method="POST" action="/apiaries">
+            @csrf
             <div class="mb-6">
                 <label
                     for="name"
@@ -22,6 +23,10 @@
                     class="border border-gray-200 rounded p-2 w-full"
                     name="name"
                 />
+
+                @error('name')
+                    <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @enderror
             </div>
 
             <div class="mb-6">
@@ -37,6 +42,11 @@
                     rows="10"
                     placeholder="Zamieść tu przydatny dla Ciebie opis pasieki"
                 ></textarea>
+
+                @error('description')
+                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @enderror
+
             </div>
 
             <div class="mb-6">
@@ -49,6 +59,11 @@
                     name="street_number"
                     placeholder=""
                 />
+
+                @error('street_number')
+                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @enderror
+
             </div>
 
             <div class="mb-6">
@@ -63,6 +78,11 @@
                     name="street_name"
                     placeholder=""
                 />
+
+                @error('street_name')
+                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @enderror
+
             </div>
 
             <div class="mb-6">
@@ -74,6 +94,11 @@
                     class="border border-gray-200 rounded p-2 w-full"
                     name="city"
                 />
+
+                @error('city')
+                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @enderror
+
             </div>
 
             <div class="mb-6">
@@ -88,6 +113,11 @@
                     class="border border-gray-200 rounded p-2 w-full"
                     name="country"
                 />
+
+                @error('country')
+                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @enderror
+
             </div>
 
             <div class="mb-6">
@@ -100,18 +130,23 @@
                     name="zip_code"
                     placeholder=""
                 />
+
+                @error('zip_code')
+                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @enderror
+
             </div>
 
-            <div class="mb-6">
-                <label for="photo" class="inline-block text-lg mb-2">
-                    Zdjęcie pasieki
-                </label>
-                <input
-                    type="file"
-                    class="border border-gray-200 rounded p-2 w-full"
-                    name="photo"
-                />
-            </div>
+{{--            <div class="mb-6">--}}
+{{--                <label for="photo" class="inline-block text-lg mb-2">--}}
+{{--                    Zdjęcie pasieki--}}
+{{--                </label>--}}
+{{--                <input--}}
+{{--                    type="file"--}}
+{{--                    class="border border-gray-200 rounded p-2 w-full"--}}
+{{--                    name="photo"--}}
+{{--                />--}}
+{{--            </div>--}}
 
             <div class="mb-6">
                 <button

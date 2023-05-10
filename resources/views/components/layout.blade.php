@@ -49,5 +49,9 @@
             <p class="ml-2">Copyright &copy; 2023, All Rights reserved</p>
         </footer>
 
+        {{--wiadomość potwierdzajaca wykonanie jakiejś czynności, position fixed - zawsze na górze będzie--}}
+        <x-flash-message>
+        </x-flash-message>
+
     </body>
 </html>

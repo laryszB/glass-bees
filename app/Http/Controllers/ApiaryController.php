@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Apiary;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ApiaryController extends Controller
 {
@@ -30,7 +31,21 @@ class ApiaryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $formFields = $request->validate([
+            'name' => ['required', 'unique:apiaries', 'max:255'],
+            'description' => ['required'],
+            'street_number' => ['required', 'numeric', 'integer'],
+            'street_name' => ['required'],
+            'city' => ['required'],
+            'country' => ['required'],
+            'zip_code' => ['required']
+
+
+        ]);
+
+        Apiary::create($formFields);
+
+        return redirect('/')->with('message', 'Pasieka została utworzona!');
     }
 
     /**
