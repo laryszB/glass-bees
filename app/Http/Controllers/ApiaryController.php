@@ -13,7 +13,7 @@ class ApiaryController extends Controller
     public function index()
     {
         return view('apiaries.index', [
-            'apiaries' => Apiary::all()
+            'apiaries' => Apiary::latest()->filter(request(['search']))->get()
         ]);
     }
 
