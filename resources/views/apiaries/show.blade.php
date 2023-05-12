@@ -10,7 +10,7 @@
             >
                 <img
                     class="w-48 mr-6 mb-6"
-                    src="{{asset('images/apiary_logo.png')}}"
+                    src="{{$apiary->photo ? asset('storage/' . $apiary->photo) : asset('images/apiary_logo.png')}}"
                     alt=""
                 />
 
@@ -42,6 +42,27 @@
                 </div>
             </div>
         </x-card>
+
+        <x-card class="mt-4 p-2 flex space-x-6">
+            <a href="/apiaries/{{$apiary->id}}/edit">
+                <i class="fa-solid fa-pencil"></i>
+                Edytuj
+            </a>
+            <form method="POST" action="/apiaries/{{$apiary->id}}" >
+                @csrf
+                @method('DELETE')
+
+                <button class="text-red-500">
+                    <i class="fa-solid fa-trash"></i>
+                    Usuń
+                </button>
+            </form>
+        </x-card>
+
+        <x-card>
+
+        </x-card>
+
     </div>
 
 </x-layout>

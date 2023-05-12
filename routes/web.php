@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ApiaryController;
-use App\Models\Apiary;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +19,15 @@ Route::get('/', [ApiaryController::class, 'index']);
 
 // Show create apiary form
 Route::get('/apiaries/create', [ApiaryController::class, 'create']);
+
+//Show edit apiary form
+Route::get('/apiaries/{apiary}/edit', [ApiaryController::class, 'edit']);
+
+//Update apiary
+Route::put('/apiaries/{apiary}', [ApiaryController::class, 'update']);
+
+//Delete apiary
+Route::delete('/apiaries/{apiary}', [ApiaryController::class, 'destroy']);
 
 // Store apiary data
 Route::post('/apiaries', [ApiaryController::class, 'store']);

@@ -5,13 +5,14 @@
     >
         <header class="text-center">
             <h2 class="text-2xl font-bold uppercase mb-1">
-                Utwórz pasiekę
+                Edytuj pasiekę
             </h2>
-            <p class="mb-4">Pasieka zostanie przypisana do Twojego konta</p>
+            <p class="mb-4">Edytuj swoją istniejącą pasiekę: <b>{{$apiary->name}}</b></p>
         </header>
 
-        <form method="POST" action="/apiaries" enctype="multipart/form-data">
+        <form method="POST" action="/apiaries/{{$apiary->id}}" enctype="multipart/form-data">
             @csrf
+            @method('PUT') {{--    dyrektywa laravel - ma na celu ustawienie metody przesyłu danych formularza na PUT do edycji (w htmlu nie da się tego zrobić)        --}}
             <div class="mb-6">
                 <label
                     for="name"
@@ -22,11 +23,11 @@
                     type="text"
                     class="border border-gray-200 rounded p-2 w-full"
                     name="name"
-                    value="{{old('name')}}"
+                    value="{{$apiary->name}}"
                 />
 
                 @error('name')
-                    <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                 @enderror
             </div>
 
@@ -42,7 +43,7 @@
                     name="description"
                     rows="10"
                     placeholder="Zamieść tu przydatny dla Ciebie opis pasieki"
-                >{{old('description')}}</textarea>
+                >{{$apiary->description}}</textarea>
 
                 @error('description')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -59,7 +60,7 @@
                     class="border border-gray-200 rounded p-2 w-full"
                     name="street_number"
                     placeholder=""
-                    value="{{old('street_number')}}"
+                    value="{{$apiary->street_number}}"
                 />
 
                 @error('street_number')
@@ -79,7 +80,7 @@
                     class="border border-gray-200 rounded p-2 w-full"
                     name="street_name"
                     placeholder=""
-                    value="{{old('street_name')}}"
+                    value="{{$apiary->street_name}}"
                 />
 
                 @error('street_name')
@@ -96,7 +97,7 @@
                     type="text"
                     class="border border-gray-200 rounded p-2 w-full"
                     name="city"
-                    value="{{old('city')}}"
+                    value="{{$apiary->city}}"
                 />
 
                 @error('city')
@@ -116,7 +117,7 @@
                     type="text"
                     class="border border-gray-200 rounded p-2 w-full"
                     name="country"
-                    value="{{old('country')}}"
+                    value="{{$apiary->country}}"
                 />
 
                 @error('country')
@@ -134,7 +135,7 @@
                     class="border border-gray-200 rounded p-2 w-full"
                     name="zip_code"
                     placeholder=""
-                    value="{{old('zip_code')}}"
+                    value="{{$apiary->zip_code}}"
                 />
 
                 @error('zip_code')
@@ -153,6 +154,12 @@
                     name="photo"
                 />
 
+                <img
+                    class="w-48 mr-6 mb-6"
+                    src="{{$apiary->photo ? asset('storage/' . $apiary->photo) : asset('images/apiary_logo.png')}}"
+                    alt=""
+                />
+
                 @error('photo')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                 @enderror
@@ -163,7 +170,7 @@
                 <button
                     class="bg-laravel text-white rounded py-2 px-4 hover:bg-black"
                 >
-                    Utwórz pasiekę
+                    Edytuj pasiekę
                 </button>
 
                 <a href="/" class="text-black ml-4"> Powrót </a>

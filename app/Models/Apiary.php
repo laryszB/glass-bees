@@ -21,7 +21,8 @@ class Apiary extends Model
         'street_name',
         'city',
         'country',
-        'zip_code'
+        'zip_code',
+        'photo'
     ];
 
     public function scopeFilter($query, array $filters){

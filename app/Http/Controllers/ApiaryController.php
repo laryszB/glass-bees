@@ -14,7 +14,7 @@ class ApiaryController extends Controller
     public function index()
     {
         return view('apiaries.index', [
-            'apiaries' => Apiary::latest()->filter(request(['search']))->get()
+            'apiaries' => Apiary::latest()->filter(request(['search']))->paginate(2)
         ]);
     }
 
@@ -39,9 +39,11 @@ class ApiaryController extends Controller
             'city' => ['required'],
             'country' => ['required'],
             'zip_code' => ['required']
-
-
         ]);
+
+        if($request->hasFile('photo')){
+            $formFields['photo'] = $request->file('photo')->store('apiaries_photos', 'public');
+        }
 
         Apiary::create($formFields);
 
@@ -61,24 +63,41 @@ class ApiaryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Apiary $apiary)
     {
-        //
+        return view('apiaries.edit', ['apiary' => $apiary]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Apiary $apiary)
     {
-        //
+        $formFields = $request->validate([
+            'name' => ['required', 'max:255'],
+            'description' => ['required'],
+            'street_number' => ['required', 'numeric', 'integer'],
+            'street_name' => ['required'],
+            'city' => ['required'],
+            'country' => ['required'],
+            'zip_code' => ['required']
+        ]);
+
+        if($request->hasFile('photo')){
+            $formFields['photo'] = $request->file('photo')->store('apiaries_photos', 'public');
+        }
+
+        $apiary->update($formFields);
+
+        return back()->with('message', 'Pasieka została zaktualizowana! ');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Apiary $apiary)
     {
-        //
+        $apiary->delete();
+        return redirect('/')->with('message', 'Pasieka została usunięta!');
     }
 }
