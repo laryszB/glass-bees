@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiaryController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,5 +35,13 @@ Route::post('/apiaries', [ApiaryController::class, 'store']);
 
 //Single apiary
 Route::get('/apiaries/{apiary}', [ApiaryController::class, 'show']);
+
+
+
+//Show register/create form
+Route::get('/register', [UserController::class, 'create']);
+
+//Create new user
+Route::post('/users', [UserController::class, 'store']);
 
 

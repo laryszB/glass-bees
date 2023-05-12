@@ -27,12 +27,12 @@
                     </x-dropdown-menu>
                 </li>
                 <li>
-                    <a href="register.html" class="hover:text-laravel"
+                    <a href="/register" class="hover:text-laravel"
                     ><i class="fa-solid fa-user-plus"></i> Zarejestruj się</a
                     >
                 </li>
                 <li>
-                    <a href="login.html" class="hover:text-laravel"
+                    <a href="/login" class="hover:text-laravel"
                     ><i class="fa-solid fa-arrow-right-to-bracket"></i>
                         Zaloguj się</a
                     >

@@ -14,7 +14,7 @@ class ApiaryController extends Controller
     public function index()
     {
         return view('apiaries.index', [
-            'apiaries' => Apiary::latest()->filter(request(['search']))->paginate(2)
+            'apiaries' => Apiary::latest()->filter(request(['search']))->paginate(4)
         ]);
     }
 
