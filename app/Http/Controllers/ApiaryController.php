@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Apiary;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class ApiaryController extends Controller
@@ -13,8 +14,16 @@ class ApiaryController extends Controller
      */
     public function index()
     {
+        if (Auth::check()){         // Sprawdzenie czy użytkownik jest zalogowany
+            $user = auth()->user(); // Pobierz dane zalogowanego użytkownika
+            $apiaries = $user->apiaries()->latest()->filter(request(['search']))->paginate(4); //Pobierz pasieki zalogowanego użytkownika
+        }
+        else{
+            $apiaries = collect(); // Jeżeli nie jest zalogowany zwracana jest pusta kolekcja pasiek
+        }
+
         return view('apiaries.index', [
-            'apiaries' => Apiary::latest()->filter(request(['search']))->paginate(4)
+            'apiaries' => $apiaries
         ]);
     }
 
@@ -44,6 +53,8 @@ class ApiaryController extends Controller
         if($request->hasFile('photo')){
             $formFields['photo'] = $request->file('photo')->store('apiaries_photos', 'public');
         }
+
+        $formFields['user_id'] = auth()->id();
 
         Apiary::create($formFields);
 

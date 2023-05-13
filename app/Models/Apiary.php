@@ -16,6 +16,7 @@ class Apiary extends Model
      */
     protected $fillable = [
         'name',
+        'user_id',
         'description',
         'street_number',
         'street_name',
@@ -34,5 +35,10 @@ class Apiary extends Model
                 ->orWhere('country', 'like', '%'. request('search'). '%');
 
         }
+    }
+
+    // Relationship to User
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

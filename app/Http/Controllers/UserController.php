@@ -80,4 +80,35 @@ class UserController extends Controller
     {
         //
     }
+
+    //Show login form
+    public function login(){
+        return view('users.login');
+    }
+
+    //Authenticate user
+    public function authenticate(Request $request){
+        $formFields = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required']
+        ]);
+
+        if(auth()->attempt($formFields)){
+            $request->session()->regenerate();
+
+            return redirect('/')->with('message', "Zostałeś zalogowany");
+        }
+
+        return back()->withErrors(['email' => 'Błędne dane logowania'])->onlyInput('email');
+    }
+
+    // Logout user
+    public function logout(Request $request){
+        auth()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('message', 'Zostałeś pomyślnie wylogowany');
+    }
 }

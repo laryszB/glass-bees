@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('apiaries', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->longText('description');
             $table->integer('street_number');
