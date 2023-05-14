@@ -21,6 +21,9 @@ Route::get('/', [ApiaryController::class, 'index']);
 // Show create apiary form
 Route::get('/apiaries/create', [ApiaryController::class, 'create'])->middleware('auth');
 
+// Manage apiaries
+Route::get('/apiaries/manage', [ApiaryController::class, 'manage'])->middleware('auth');
+
 //Show edit apiary form
 Route::get('/apiaries/{apiary}/edit', [ApiaryController::class, 'edit'])->middleware('auth');
 

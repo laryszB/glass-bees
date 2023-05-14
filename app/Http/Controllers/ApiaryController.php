@@ -111,4 +111,11 @@ class ApiaryController extends Controller
         $apiary->delete();
         return redirect('/')->with('message', 'Pasieka została usunięta!');
     }
+
+    /**
+     * Apiaries manage page.
+     */
+    public function manage(){
+        return view('apiaries.manage', ['apiaries' => auth()->user()->apiaries()->get()]);
+    }
 }

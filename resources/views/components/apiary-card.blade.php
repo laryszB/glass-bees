@@ -12,7 +12,7 @@
                 <a href="/apiaries/{{$apiary->id}}">
                     <div class="bg-laravel rounded px-6 py-1 mb-2 text-center w-fit text-white hover:bg-amber-400">
                         <span class="font-semibold">{{$apiary->name}}</span>
-                        <i class="fa-solid fa-arrow-right"></i>
+                        <i class="fa-solid fa-wheat-awn"></i>
                     </div>
                 </a>
             </h3>
