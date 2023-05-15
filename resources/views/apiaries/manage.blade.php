@@ -39,22 +39,16 @@
                         <td
                             class="px-2 py-2 border-t border-b border-gray-300 text-lg"
                         >
-                            <form method="POST" action="/apiaries/{{$apiary->id}}" >
-                                @csrf
-                                @method('DELETE')
-
-                                <button class="text-red-500">
-                                    <i class="fa-solid fa-trash"></i>
-                                    Usuń
-                                </button>
-                            </form>
+{{--                        Argument action wymagany (podanie widoku obsługującego usunięcie rekordu)--}}
+                            <x-delete-form action="/apiaries/{{$apiary->id}}">
+                            </x-delete-form>
                         </td>
                     </tr>
                 @endforeach
                 @else
                 <tr class="border-amber-300">
                     <td class="px-4 py-8 border-t border-b border border-amber-300 text-lg">
-                        <p class="text-center">Nie znaleziono żadnych pasiek</p>
+                        <p class="text-center">Nie posiadasz żadnych pasiek</p>
                     </td>
                 </tr>
             @endunless
