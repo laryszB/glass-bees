@@ -170,7 +170,7 @@
                 <button
                     class="bg-laravel text-white rounded py-2 px-4 hover:bg-black"
                 >
-                    Edytuj pasiekę
+                    Zatwierdź edycję
                 </button>
 
                 <a href="/" class="text-black ml-4"> Powrót </a>

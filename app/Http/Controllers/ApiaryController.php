@@ -43,7 +43,7 @@ class ApiaryController extends Controller
         $formFields = $request->validate([
             'name' => ['required', 'unique:apiaries', 'max:255'],
             'description' => ['required'],
-            'street_number' => ['required', 'numeric', 'integer'],
+            'street_number' => ['required', 'numeric', 'integer '],
             'street_name' => ['required'],
             'city' => ['required'],
             'country' => ['required'],
@@ -84,6 +84,11 @@ class ApiaryController extends Controller
      */
     public function update(Request $request, Apiary $apiary)
     {
+        //Akcja możliwa tylko wtedy jeżeli pasieka należy do zalogowanego użytkownika
+        if($apiary->user_id != auth()->id()){
+            abort(403, 'Nieautoryzowana akcja');
+        }
+
         $formFields = $request->validate([
             'name' => ['required', 'max:255'],
             'description' => ['required'],
@@ -108,6 +113,11 @@ class ApiaryController extends Controller
      */
     public function destroy(Apiary $apiary)
     {
+        //Akcja możliwa tylko wtedy jeżeli pasieka należy do zalogowanego użytkownika
+        if($apiary->user_id != auth()->id()){
+            abort(403, 'Nieautoryzowana akcja');
+        }
+
         $apiary->delete();
         return redirect('/')->with('message', 'Pasieka została usunięta!');
     }
