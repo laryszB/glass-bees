@@ -1,6 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
+
+    {{--    Import Slim Select library--}}
+    <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
+    <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet"/>
+
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">

@@ -5,6 +5,7 @@ import Alpine from 'alpinejs'
 window.Alpine = Alpine
 Alpine.start()
 
-// sweetalert2
-import Swal from 'sweetalert2';
-window.Swal = Swal;
+// Slim Select
+import { floraSlimSelect } from './flora-slim-select'; // Importuj funkcję z pliku slimselect-config.js
+floraSlimSelect();
+

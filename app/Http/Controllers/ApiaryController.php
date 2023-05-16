@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Apiary;
+use App\Models\Flora;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -32,7 +33,9 @@ class ApiaryController extends Controller
      */
     public function create()
     {
-        return view('apiaries.create');
+        $floras = Flora::all(); //przekaż do widoku wartości tabeli floras
+
+        return view('apiaries.create', compact('floras'));
     }
 
     /**
@@ -40,9 +43,13 @@ class ApiaryController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request);
+
+
         $formFields = $request->validate([
             'name' => ['required', 'unique:apiaries', 'max:255'],
             'description' => ['required'],
+            'flora' => ['required', 'array', 'min:1'], // Dodane pole "flora"
             'street_number' => ['required', 'numeric', 'integer '],
             'street_name' => ['required'],
             'city' => ['required'],
@@ -56,7 +63,9 @@ class ApiaryController extends Controller
 
         $formFields['user_id'] = auth()->id();
 
-        Apiary::create($formFields);
+        $apiary = Apiary::create($formFields);
+
+        $apiary->floras()->sync($request->input('flora', [])); //pobranie tablicy wartości dla flora z requesta i zsychnronizowanie z relacją
 
         return redirect('/')->with('message', 'Pasieka została utworzona!');
     }

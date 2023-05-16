@@ -51,6 +51,20 @@
             </div>
 
             <div class="mb-6">
+                <label for="flora" class="inline-block text-lg mb-2">Roślinność</label>
+                <select id="flora" name="flora[]" multiple>
+                    @foreach($floras as $flora)
+                        <option value="{{ $flora->id }}">{{ $flora->name }}</option>
+                    @endforeach
+                </select>
+
+                @error('flora')
+                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @enderror
+
+            </div>
+
+            <div class="mb-6">
                 <label for="street_number" class="inline-block text-lg mb-2"
                 >Numer ulicy</label
                 >
@@ -170,5 +184,17 @@
             </div>
         </form>
     </x-card>
+
+{{--    Skrypt odpowiedzialny za działanie biblioteki slim select przy wyborze roślinności--}}
+{{--    <script>--}}
+{{--        new SlimSelect({--}}
+{{--            select: '#flora',--}}
+{{--            settings: {--}}
+{{--                placeholderText: 'Wybierz rośliny',--}}
+{{--                closeOnSelect: false,--}}
+{{--                searchPlaceholder: 'Szukaj roślin...',--}}
+{{--            }--}}
+{{--        });--}}
+{{--    </script>--}}
 
 </x-layout>
