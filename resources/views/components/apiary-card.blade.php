@@ -3,7 +3,7 @@
 <x-card>
     <div class="flex">
         <img
-            class="hidden w-48 mr-6 md:block"
+            class="hidden w-52 mr-6 md:block"
             src="{{$apiary->photo ? asset('storage/' . $apiary->photo) : asset('images/apiary_logo.png')}}"
             alt=""
         />
@@ -16,7 +16,16 @@
                     </div>
                 </a>
             </h3>
-            <div class="text-xl font-bold mb-4">Pogoda</div>
+            <div class="text-xl font-bold mb-4 text-blue-400">
+                <i class="fa-solid fa-cloud-sun" style="color: #60A5FA;"></i>   Pogoda
+            </div>
+            <div class="text-xl font-semibold text-green-700 mb-4">
+                <i class="fa-solid fa-seedling" style="color: #15803d;"></i>
+                Roślinność:
+                @foreach($apiary->floras as $flora)
+                    <span class="bg-green-100 px-2 rounded text-lg">{{$flora->name}}</span>
+                @endforeach
+            </div>
             <ul class="flex">
                 <li
                     class="flex items-center justify-center bg-laravel text-white rounded py-1 px-3 mr-2 text-xs"

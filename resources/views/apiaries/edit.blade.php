@@ -52,6 +52,20 @@
             </div>
 
             <div class="mb-6">
+                <label for="flora" class="inline-block text-lg mb-2">Roślinność</label>
+                <select id="flora" name="flora[]" multiple>
+                    @foreach($floras as $flora)
+                        <option class="slim-select-option" value="{{ $flora->id }}" @if($apiary->floras->contains($flora->id)) selected @endif>{{ $flora->name }}</option>
+                    @endforeach
+                </select>
+
+                @error('flora')
+                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @enderror
+
+            </div>
+
+            <div class="mb-6">
                 <label for="street_number" class="inline-block text-lg mb-2"
                 >Numer ulicy</label
                 >

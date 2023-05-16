@@ -49,7 +49,7 @@ class ApiaryController extends Controller
         $formFields = $request->validate([
             'name' => ['required', 'unique:apiaries', 'max:255'],
             'description' => ['required'],
-            'flora' => ['required', 'array', 'min:1'], // Dodane pole "flora"
+            'flora' => ['required', 'array', 'min:1'],
             'street_number' => ['required', 'numeric', 'integer '],
             'street_name' => ['required'],
             'city' => ['required'],
@@ -85,7 +85,10 @@ class ApiaryController extends Controller
      */
     public function edit(Apiary $apiary)
     {
-        return view('apiaries.edit', ['apiary' => $apiary]);
+        $floras = Flora::all(); // pobierz wszystkie rekordy z tabeli floras
+
+//        return view('apiaries.edit', ['apiary' => $apiary]);
+        return view('apiaries.edit', compact('apiary', 'floras'));
     }
 
     /**
@@ -101,6 +104,7 @@ class ApiaryController extends Controller
         $formFields = $request->validate([
             'name' => ['required', 'max:255'],
             'description' => ['required'],
+            'flora' => ['required', 'array', 'min:1'],
             'street_number' => ['required', 'numeric', 'integer'],
             'street_name' => ['required'],
             'city' => ['required'],
@@ -112,7 +116,9 @@ class ApiaryController extends Controller
             $formFields['photo'] = $request->file('photo')->store('apiaries_photos', 'public');
         }
 
-        $apiary->update($formFields);
+        $apiary->update($formFields); //zaktualizuj kolumny tabeli apiary
+
+        $apiary->floras()->sync($request->input('flora', [])); // zaktualizacji tablice asocjacyjną apiary_flora w relacji many to many
 
         return back()->with('message', 'Pasieka została zaktualizowana! ');
     }
