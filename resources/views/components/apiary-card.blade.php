@@ -23,27 +23,9 @@
                 <i class="fa-solid fa-seedling" style="color: #15803d;"></i>
                 Roślinność:
                 @foreach($apiary->floras as $flora)
-                    <span class="bg-green-100 px-2 rounded text-lg">{{$flora->name}}</span>
+                    <span class="bg-green-100 px-2 rounded text-lg whitespace-pre">{{$flora->name}}</span>
                 @endforeach
             </div>
-            <ul class="flex">
-                <li
-                    class="flex items-center justify-center bg-laravel text-white rounded py-1 px-3 mr-2 text-xs"
-                >
-                    <p class="text-base">Liczba uli:
-                        <span class="font-bold text-amber-300">43</span>
-                        <i class="fa-brands fa-hive" style="color: #fcd34d;"></i>
-                    </p>
-                </li>
-                <li
-                    class="flex items-center justify-center bg-laravel text-white rounded py-1 px-3 mr-2 text-xs"
-                >
-                    <p class="text-base">Liczba ramek:
-                        <span class="font-bold text-amber-300">50</span>
-                        <i class="fa-solid fa-table-cells-large fa-sm" style="color: #fcd34d;"></i>
-                    </p>
-                </li>
-            </ul>
             <div class="text-lg mt-4">
                 <i class="fa-solid fa-location-dot"></i> {{$apiary->city . ', '. $apiary->street_name . ' '. $apiary->street_number}}
             </div>

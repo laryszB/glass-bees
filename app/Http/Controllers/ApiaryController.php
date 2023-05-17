@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Apiary;
+use App\Models\Beehive;
 use App\Models\Flora;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,16 +16,29 @@ class ApiaryController extends Controller
      */
     public function index()
     {
-        if (Auth::check()){         // Sprawdzenie czy użytkownik jest zalogowany
+        if (auth()->check()){         // Sprawdzenie czy użytkownik jest zalogowany
             $user = auth()->user(); // Pobierz dane zalogowanego użytkownika
             $apiaries = $user->apiaries()->latest()->filter(request(['search']))->paginate(4); //Pobierz pasieki zalogowanego użytkownika
+
+            // Pobierz wszystkie id apiaries
+            $apiaryIds = $apiaries->pluck('id')->toArray();
+
+            // Pobierz beehives przypisane do apiaries użytkownika
+            $beehives = Beehive::whereIn('apiary_id', $apiaryIds)->get();
+
+            // Liczba wszystkich ramek w ulach
+            $totalFrames = $beehives->sum('frames');
         }
         else{
             $apiaries = collect(); // Jeżeli nie jest zalogowany zwracana jest pusta kolekcja pasiek
+            $beehives = collect();
+            $totalFrames = 0;
         }
 
         return view('apiaries.index', [
-            'apiaries' => $apiaries
+            'apiaries' => $apiaries,
+            'beehives' => $beehives,
+            'totalFrames' => $totalFrames
         ]);
     }
 

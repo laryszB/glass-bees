@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('apiary_flora', function (Blueprint $table) {
-            $table->foreignId('apiary_id')->constrained();
-            $table->foreignId('flora_id')->constrained();
+            $table->foreignId('apiary_id')->constrained()->onDelete('cascade');
+            $table->foreignId('flora_id')->constrained()->onDelete('cascade');
         });
     }
 

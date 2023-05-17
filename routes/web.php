@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiaryController;
+use App\Http\Controllers\BeehiveController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+//  *APIARIES*
 
 //Apiaries
 Route::get('/', [ApiaryController::class, 'index']);
@@ -37,7 +40,19 @@ Route::delete('/apiaries/{apiary}', [ApiaryController::class, 'destroy'])->middl
 Route::post('/apiaries', [ApiaryController::class, 'store'])->middleware('auth');
 
 //Single apiary
-Route::get('/apiaries/{apiary}', [ApiaryController::class, 'show']);
+Route::get('/apiaries/{apiary}', [ApiaryController::class, 'show'])->middleware('auth');
+
+
+//  *BEEHIVES*
+
+//Beehives
+Route::get('/apiaries/{apiary}/beehives', [BeehiveController::class, 'index'])->middleware('auth')->name('beehives_index');
+
+//Show create beehive form
+Route::get('/apiaries/{apiary}/beehives/create', [BeehiveController::class, 'create'])->middleware('auth')->name('beehives_create');
+
+//Show edit beehive form
+Route::get('/apiaries/{apiary}/beehives/{beehive}/edit', [BeehiveController::class, 'edit'])->middleware('auth');
 
 
 

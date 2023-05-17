@@ -22,8 +22,8 @@
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
 </head>
-    <body class="mb-48">
-        <nav class="flex justify-between items-center mb-4">
+    <body {{$attributes->merge(['class' => 'mb-48'])}}>
+    <nav class="flex justify-between items-center mb-4">
             <a href="/"
             ><img class="w-24" src="{{asset('images/bee_logo.png')}}" alt="" class="logo"
                 /></a>

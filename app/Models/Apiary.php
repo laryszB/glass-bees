@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Apiary extends Model
 {
@@ -38,8 +40,22 @@ class Apiary extends Model
         }
     }
 
+    // Zlicz wszystkie ule w danej pasiece
+    public function countBeehives()
+    {
+        return $this->beehives()->count();
+    }
+    // Zlicz wszystkie ramki w danej pasiece
+    public function getTotalBeehivesFrames()
+    {
+        return $this->beehives()->sum('frames');
+    }
+
+
+
     // Relationship to User
-    public function user(){
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 
@@ -47,5 +63,10 @@ class Apiary extends Model
     public function floras(): BelongsToMany
     {
         return $this->belongsToMany(Flora::class);
+    }
+
+    public function beehives(): hasMany
+    {
+        return $this->hasMany(Beehive::class);
     }
 }
