@@ -3,7 +3,7 @@
         <li
             class="flex items-center justify-center text-white py-1 px-4 mr-2"
         >
-            <p class="text-xl text-black font-bold uppercase">Twoje statystyki:
+            <p class="text-xl text-black font-bold uppercase tracking-widest">Twoje statystyki:
             </p>
         </li>
         <li

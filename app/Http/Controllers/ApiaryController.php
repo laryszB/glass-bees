@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Apiary;
 use App\Models\Beehive;
 use App\Models\Flora;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -57,7 +58,6 @@ class ApiaryController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request);
 
 
         $formFields = $request->validate([
@@ -86,9 +86,12 @@ class ApiaryController extends Controller
 
     /**
      * Display the specified resource.
+     * @throws AuthorizationException
      */
     public function show(Apiary $apiary)
     {
+        $this->authorize('view', $apiary); // sprawdź czy pasieka którą użytkownik próbuje wyświetlić należy faktycznie do niego, więcej w app/Policies/ApiaryPolicy
+
         return view('apiaries.show', [
             'apiary' => $apiary
         ]);
@@ -101,15 +104,17 @@ class ApiaryController extends Controller
     {
         $floras = Flora::all(); // pobierz wszystkie rekordy z tabeli floras
 
-//        return view('apiaries.edit', ['apiary' => $apiary]);
         return view('apiaries.edit', compact('apiary', 'floras'));
     }
 
     /**
      * Update the specified resource in storage.
+     * @throws AuthorizationException
      */
     public function update(Request $request, Apiary $apiary)
     {
+        $this->authorize('update', $apiary);
+
         //Akcja możliwa tylko wtedy jeżeli pasieka należy do zalogowanego użytkownika
         if($apiary->user_id != auth()->id()){
             abort(403, 'Nieautoryzowana akcja');
@@ -139,9 +144,12 @@ class ApiaryController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @throws AuthorizationException
      */
     public function destroy(Apiary $apiary)
     {
+        $this->authorize('delete', $apiary);
+
         //Akcja możliwa tylko wtedy jeżeli pasieka należy do zalogowanego użytkownika
         if($apiary->user_id != auth()->id()){
             abort(403, 'Nieautoryzowana akcja');
@@ -155,6 +163,6 @@ class ApiaryController extends Controller
      * Apiaries manage page.
      */
     public function manage(){
-        return view('apiaries.manage', ['apiaries' => auth()->user()->apiaries()->get()]);
+        return view('apiaries.manage', ['apiaries' => auth()->user()->apiaries()->with('beehives')->get()]);
     }
 }

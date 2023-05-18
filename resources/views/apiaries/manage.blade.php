@@ -1,15 +1,11 @@
 <x-layout>
+    @unless($apiaries->isEmpty())
     <x-card class="p-10">
-            <h1
-                class="text-3xl text-center font-bold my-6 uppercase"
-            >
+            <h1 class="text-3xl text-center font-bold my-6 uppercase">
                 Zarządzaj pasiekami
             </h1>
-
-
         <table class="w-full table-auto rounded-sm">
             <tbody>
-            @unless($apiaries->isEmpty())
                 @foreach($apiaries as $apiary)
                     <tr class="border-gray-300">
 
@@ -45,14 +41,11 @@
                         </td>
                     </tr>
                 @endforeach
-                @else
-                <tr class="border-amber-300">
-                    <td class="px-4 py-8 border-t border-b border border-amber-300 text-lg">
-                        <p class="text-center">Nie posiadasz żadnych pasiek</p>
-                    </td>
-                </tr>
-            @endunless
             </tbody>
         </table>
     </x-card>
+    @else
+        <p class="flex justify-center text-xl bg-red-100 p-4">Nie masz żadnych pasiek</p>
+    @endunless
+
 </x-layout>

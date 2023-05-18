@@ -185,16 +185,4 @@
         </form>
     </x-card>
 
-{{--    Skrypt odpowiedzialny za działanie biblioteki slim select przy wyborze roślinności--}}
-{{--    <script>--}}
-{{--        new SlimSelect({--}}
-{{--            select: '#flora',--}}
-{{--            settings: {--}}
-{{--                placeholderText: 'Wybierz rośliny',--}}
-{{--                closeOnSelect: false,--}}
-{{--                searchPlaceholder: 'Szukaj roślin...',--}}
-{{--            }--}}
-{{--        });--}}
-{{--    </script>--}}
-
 </x-layout>

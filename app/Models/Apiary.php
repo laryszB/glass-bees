@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Policies\ApiaryPolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,6 +29,11 @@ class Apiary extends Model
         'zip_code',
         'photo'
     ];
+
+    protected $policies = [
+        Apiary::class => ApiaryPolicy::class,
+    ];
+
 
     public function scopeFilter($query, array $filters){
         if($filters['search'] ?? false){

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Policies\BeehivePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,6 +27,10 @@ class Beehive extends Model
         'half_extensions',
         'frames',
         'note'
+    ];
+
+    protected $policies = [
+        Beehive::class => BeehivePolicy::class,
     ];
 
     //Relationship to Apiary

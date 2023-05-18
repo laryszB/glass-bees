@@ -48,11 +48,26 @@ Route::get('/apiaries/{apiary}', [ApiaryController::class, 'show'])->middleware(
 //Beehives
 Route::get('/apiaries/{apiary}/beehives', [BeehiveController::class, 'index'])->middleware('auth')->name('beehives_index');
 
+// Store beehvie data
+Route::post('/apiaries/{apiary}/beehives/store', [BeehiveController::class, 'store'])->middleware('auth')->name('beehives_store');
+
 //Show create beehive form
 Route::get('/apiaries/{apiary}/beehives/create', [BeehiveController::class, 'create'])->middleware('auth')->name('beehives_create');
 
 //Show edit beehive form
-Route::get('/apiaries/{apiary}/beehives/{beehive}/edit', [BeehiveController::class, 'edit'])->middleware('auth');
+Route::get('/apiaries/{apiary}/beehives/{beehive}/edit', [BeehiveController::class, 'edit'])->middleware('auth')->name('beehives_edit');
+
+//Update beehive
+Route::put('/apiaries/{apiary}/beehives/{beehive}', [BeehiveController::class, 'update'])->middleware('auth')->name('beehives_update');
+
+//Delete beehive
+Route::delete('/apiaries/{apiary}/beehives/{beehive}', [BeehiveController::class, 'destroy'])->middleware('auth')->name('beehives_delete');
+
+// Manage beehives
+Route::get('/beehives/manage', [BeehiveController::class, 'manage'])->middleware('auth')->name('beehives_manage');
+
+//Single beehive
+Route::get('/apiaries/{apiary}/beehives/{beehive}', [BeehiveController::class, 'show'])->middleware('auth')->name('beehives_show');;
 
 
 

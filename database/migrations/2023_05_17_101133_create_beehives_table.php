@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('extensions')->unsigned();
             $table->integer('half_extensions')->unsigned();
             $table->integer('frames')->unsigned();
-            $table->longText('note');
+            $table->longText('note')->nullable();
             $table->timestamps();
         });
     }

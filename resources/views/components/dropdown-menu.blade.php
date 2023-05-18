@@ -27,5 +27,13 @@
                 <i class="fa-solid fa-gear" style="color: black;"></i> Zarządaj pasiekami
             </a>
         </li>
+        <li>
+            <a
+                class="rounded-t text-black bg-amber-100 hover:bg-amber-300 py-1 px-3 block whitespace-no-wrap font-medium"
+                href="/beehives/manage"
+            >
+                <i class="fa-brands fa-hive" style="color: black;"></i> Zarządaj ulami
+            </a>
+        </li>
     </ul>
 </div>

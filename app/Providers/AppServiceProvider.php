@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Beehive;
+use App\Policies\ApiaryPolicy;
+use App\Policies\BeehivePolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +23,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+
+        Gate::define('view', [ApiaryPolicy::class, 'view']);
+        Gate::define('view', [Beehive::class, 'view']);
+
+        Gate::define('create', [BeehivePolicy::class, 'create']);
+
+
     }
 }

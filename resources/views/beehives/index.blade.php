@@ -11,7 +11,7 @@
             </a>
 
         </h1>
-        <a class="ml-10 bg-orange-900 px-4 py-2 rounded text-lg text-white hover:bg-orange-700" href="{{ route('beehives_create', ['apiary' => $apiary->id]) }}">
+        <a class="ml-10 bg-orange-900 px-4 py-2 rounded text-lg text-white hover:bg-orange-700" href="{{ route('beehives_create', $apiary) }}">
             DODAJ NOWY UL <i class="fa-solid fa-plus"></i>
         </a>
     </div>
@@ -50,9 +50,10 @@
                     <p class="text-gray-100 text-lg">{{$beehive->frames}}</p>
                 </div>
                 <div class="flex justify-between mt-4">
-                    <a href="#" class="bg-green-900 hover:bg-green-800 text-white py-1 px-2 rounded mr-2">Szczegóły</a>
-                    <a href="#" class="bg-blue-900 hover:bg-blue-800 text-white py-1 px-2 rounded mr-2">Edytuj</a>
-                    <a href="#" class="bg-red-900 hover:bg-red-800 text-white py-1 px-2 rounded">Usuń</a>
+                    <a href="{{route('beehives_show', ['apiary'=>$apiary, 'beehive' => $beehive])}}" class="bg-green-900 hover:bg-green-800 text-white py-1 px-2 rounded mr-2"><i class="fa-regular fa-clipboard"></i> Więcej</a>
+                    <a href="{{route('beehives_edit', ['apiary'=>$apiary, 'beehive' => $beehive])}}" class="bg-blue-900 hover:bg-blue-800 text-white py-1 px-2 rounded mr-2"> <i class="fa-solid fa-pen"></i> Edytuj</a>
+                    <x-delete-form class="bg-red-900 hover:bg-red-800 text-white py-1 px-2 rounded" action="{{route('beehives_delete', ['apiary'=>$apiary, 'beehive' => $beehive])}}">
+                    </x-delete-form>
                 </div>
             </div>
         @endforeach
@@ -64,7 +65,7 @@
     @else
         <div class="flex items-center justify-center mt-4">
             <p class="bg-indigo-200 p-2">Ta pasieka nie posiada żadnych uli.
-                <a class="font-semibold text-laravel hover:text-amber-900 p-1 rounded" href="/apairies/{{$apiary->id}}/beehives/create">
+                <a class="font-semibold text-laravel hover:text-amber-900 p-1 rounded" href="{{route('beehives_create', $apiary)}}">
                     Chcesz dodać pierwszy ul?
                 </a>
             </p>
