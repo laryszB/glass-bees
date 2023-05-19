@@ -18,8 +18,13 @@
     @unless($beehives->isEmpty())
     <div class="flex flex-wrap lg:justify-start justify-center mx-5">
         @foreach ($beehives as $beehive)
-            <div class="max-w-xs mx-4 my-8 bg-yellow-900 rounded-md p-8 shadow-lg">
-                <h2 class="text-2xl font-bold text-white mb-4">{{$beehive->name}}</h2>
+            <div class="max-w-xs mx-4 my-8 bg-yellow-900 rounded-md p-8 shadow-lg" x-data="{ showModal: false }">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-white">{{$beehive->name}}</h2>
+                    <div class="flex justify-end">
+                        <i class="fa-regular fa-note-sticky text-white hover:text-amber-200 hover:cursor-pointer fa-xl" @click="showModal = true"></i>
+                    </div>
+                </div>
                 <div class="flex justify-between items-center mb-4">
                     <p class="text-gray-400 text-lg pr-6">Typ ula:</p>
                     <p class="text-gray-100 text-lg">{{$beehive->type}}</p>
@@ -55,7 +60,14 @@
                     <x-delete-form class="bg-red-900 hover:bg-red-800 text-white py-1 px-2 rounded" action="{{route('beehives_delete', ['apiary'=>$apiary, 'beehive' => $beehive])}}">
                     </x-delete-form>
                 </div>
+
+                {{--            OKNO WYŚWIETLAJĄCE NOTATKĘ ALPINE JS--}}
+                <x-beehive-note-window :apiary="$apiary" :beehive="$beehive">
+                </x-beehive-note-window>
+
+
             </div>
+
         @endforeach
     </div>
 
@@ -63,8 +75,8 @@
         {{$beehives->links()}}
     </div>
     @else
-        <div class="flex items-center justify-center mt-4">
-            <p class="bg-indigo-200 p-2">Ta pasieka nie posiada żadnych uli.
+        <div class="flex items-center justify-center bg-indigo-200 mt-4">
+            <p class=" p-2">Ta pasieka nie posiada żadnych uli.
                 <a class="font-semibold text-laravel hover:text-amber-900 p-1 rounded" href="{{route('beehives_create', $apiary)}}">
                     Chcesz dodać pierwszy ul?
                 </a>

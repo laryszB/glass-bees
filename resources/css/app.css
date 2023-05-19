@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/*styl dla x-cloak od alpine js aby zapobiec flashowaniu skryptów alpine js podczas ładowania strony*/
+[x-cloak] {
+     display: none;
+ }

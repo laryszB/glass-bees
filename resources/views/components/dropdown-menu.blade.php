@@ -8,8 +8,9 @@
     </button>
     <ul
         x-show="open"
+        x-cloak
         @click.away="open = false"
-        class="absolute pt-1 z-10"
+        class="absolute pt-1 z-20"
     >
         <li>
             <a

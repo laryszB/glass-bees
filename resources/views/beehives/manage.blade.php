@@ -1,7 +1,7 @@
 <x-layout>
     @unless($apiaries->isEmpty())
     @foreach ($apiaries as $apiary)
-        <div class=" overflow-x-auto shadow-md sm:rounded-lg mx-10 mb-6">
+        <div class="overflow-x-auto shadow-md sm:rounded-lg mx-10 mb-6">
             <div class="flex justify-center text-lg text-white font-bold w-fit bg-amber-900 px-4 p-1 mb-1">
                 <h1>PASIEKA: {{$apiary->name}}</h1>
             </div>

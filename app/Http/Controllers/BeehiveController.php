@@ -42,8 +42,13 @@ class BeehiveController extends Controller
      */
     public function store(Request $request, Apiary $apiary)
     {
+
+        $request->validate(['quantity' => ['required', 'integer', 'min:1', 'max:10']]);
+
+        $quantity = $request->input('quantity');
+
         $formFields = $request->validate([
-            'name' => ['required', 'unique:beehives', 'max:255'],
+            'name' => ['required', 'max:255'],
             'description' => ['required'],
             'type' => ['required', 'max:255'],
             'bodies' => ['required', 'numeric', 'integer'],
@@ -54,9 +59,13 @@ class BeehiveController extends Controller
             'note' => []
         ]);
 
+        $formFields['note'] = str_replace(array("\r", "\n"), ' ', $request->input('note')); // zamień znaki nowej lini na spację dopóki nie naprawię alpine.js przy okienku notatki
+
         $formFields['apiary_id'] = $apiary->id;
 
-        $beehive = Beehive::create($formFields);
+        for ($i = 0; $i < $quantity; $i++){
+            $beehive = Beehive::create($formFields);
+        }
 
         return redirect()->route('beehives_index', $apiary)->with('message', 'Ul został pomyślnie utworzony');
     }
@@ -107,9 +116,21 @@ class BeehiveController extends Controller
             'note' => []
         ]);
 
+        $formFields['note'] = str_replace(array("\r", "\n"), ' ', $request->input('note')); // zamień znaki nowej lini na spację dopóki nie naprawię alpine.js przy okienku notatki
+
         $beehive->update($formFields);
 
         return back()->with('message', 'Ul został zaktualizowany!');
+    }
+
+    public function updateNote(Request $request, Apiary $apiary, Beehive $beehive){
+
+        $this->authorize('update', $beehive);
+        $updatedNote = str_replace(array("\r", "\n"), ' ', $request->input('note')); // zamień znaki nowej lini na spację dopóki nie naprawię alpine.js przy okienku notatki
+        $beehive->note = $updatedNote;
+        $beehive->save();
+
+        return back()->with('message', 'Notatka została zaktualizowana');
     }
 
     /**

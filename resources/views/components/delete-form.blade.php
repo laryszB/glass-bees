@@ -13,7 +13,7 @@
         Usuń
     </button>
 
-    <div x-show="confirmDelete" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div x-show="confirmDelete" x-cloak class="fixed inset-0 flex items-center justify-center bg-black text-black bg-opacity-50">
         <div class="bg-white p-6 rounded">
             <p>Czy na pewno chcesz usunąć?</p>
             <div class="mt-4 flex justify-end">

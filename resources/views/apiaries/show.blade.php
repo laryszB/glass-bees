@@ -3,7 +3,7 @@
     <a href="/" class="inline-block text-black ml-4 mb-4"
     ><i class="fa-solid fa-arrow-left"></i> Back
     </a>
-    <div class="mx-4">
+    <div class="mx-60 shadow-md min-w-fit">
         <x-card>
             <div
                 class="flex flex-col items-center justify-center text-center"
@@ -31,7 +31,7 @@
                         <span class="bg-green-100 px-2 rounded text-lg whitespace-pre">{{$flora->name}}</span>
                     @endforeach
                 </div>
-                <ul class="flex">
+                <ul class="flex lg:flex-row flex-col">
                     <li
                         class="flex items-center justify-center bg-laravel text-white rounded py-1 px-3 mr-2 text-xs"
                     >
@@ -62,12 +62,27 @@
                     </div>
                 </div>
                 <div class="border border-gray-200 w-full mb-6 mt-4"></div>
-                <ul class="flex">
+                <ul class="flex lg:flex-row flex-col">
+                    <li
+                        class="flex  items-center justify-center bg-sky-700 hover:bg-sky-600 text-white rounded py-1 px-3 mr-2 text-xs"
+                    >
+                        <a href="/apiaries/{{$apiary->id}}/edit" class="text-base uppercase">Edytuj pasiekę
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>
+                    </li>
+
+                    <li
+                        class="flex items-center justify-center bg-red-700 hover:bg-red-600 text-white rounded py-1 px-3 mr-20"
+                    >
+                        <x-delete-form class="text-white text-lg uppercase" action="/apiaries/{{$apiary->id}}">
+                        </x-delete-form>
+                    </li>
+
                     <li
                         class="flex items-center justify-center bg-sky-900 hover:bg-sky-700 text-white rounded py-1 px-3 mr-2 text-xs"
                     >
-                        <a href="{{ route('beehives_index', ['apiary' => $apiary->id]) }}" class="text-base uppercase">Zarządzaj ulami
-                            <i class="fa-solid fa-gear"></i>
+                        <a href="{{ route('beehives_index', ['apiary' => $apiary->id]) }}" class="text-base uppercase">Wyświetl ule
+                            <i class="fa-brands fa-hive"></i>
                         </a>
                     </li>
                     <li

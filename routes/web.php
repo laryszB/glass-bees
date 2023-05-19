@@ -67,8 +67,11 @@ Route::delete('/apiaries/{apiary}/beehives/{beehive}', [BeehiveController::class
 Route::get('/beehives/manage', [BeehiveController::class, 'manage'])->middleware('auth')->name('beehives_manage');
 
 //Single beehive
-Route::get('/apiaries/{apiary}/beehives/{beehive}', [BeehiveController::class, 'show'])->middleware('auth')->name('beehives_show');;
+Route::get('/apiaries/{apiary}/beehives/{beehive}', [BeehiveController::class, 'show'])->middleware('auth')->name('beehives_show');
 
+
+//Update beehive note
+Route::put('/apiaries/{apiary}/beehives/{beehive}/note/update', [BeehiveController::class, 'updateNote'])->middleware('auth')->name('beehives_note_update');
 
 
 //Show register/create form
