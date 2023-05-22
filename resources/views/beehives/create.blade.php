@@ -183,7 +183,7 @@
 
             <div class="mb-6" >
                 <label for="quantity" class="inline-block text-lg mb-2 text-white">
-                    Liczba uli (max 10) <i data-tippy-content="I'm a Tippy tooltip!" class="fa-solid fa-circle-info" id="info-icon"></i>
+                    Liczba uli (max 10) <i data-tippy-content="Wybierz liczbę kopii, które chcesz utworzyć. Możesz później dowolnie edytować szczegóły każdego ula." class="fa-solid fa-circle-info" id="info-icon"></i>
                 </label>
                 <input
                     type="number"

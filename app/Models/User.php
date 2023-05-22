@@ -46,4 +46,15 @@ class User extends Authenticatable
     public function apiaries(){
         return $this->hasMany(Apiary::class, 'user_id');
     }
+
+    // User now has access to beehives directly
+    public function beehives()
+    {
+        return $this->hasManyThrough(
+            Beehive::class,
+            Apiary::class,
+            'user_id', // klucz obcy na tabeli Apiary
+            'apiary_id' // klucz obcy na tabeli Beehive
+        );
+    }
 }

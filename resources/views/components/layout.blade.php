@@ -3,8 +3,13 @@
 <head>
 
     {{--    Import Slim Select library--}}
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet"/>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport"

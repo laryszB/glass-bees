@@ -153,4 +153,5 @@ class BeehiveController extends Controller
     {
         return view('beehives.manage', ['apiaries' => auth()->user()->apiaries()->with('beehives')->get()]);
     }
+
 }
