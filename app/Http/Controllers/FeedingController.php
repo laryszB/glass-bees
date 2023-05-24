@@ -14,8 +14,9 @@ class FeedingController extends Controller
      */
     public function index()
     {
+
         // Pobierz wszystkie pasieki wraz z ulami i karmieniami
-        $apiaries = Apiary::with(['beehives.food'])->get();
+        $apiaries = auth()->user()->apiaries()->with(['beehives.food'])->get();
 
         // Przekaż dane do widoku
         return view('feedings.index', ['apiaries' => $apiaries]);

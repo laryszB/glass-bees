@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ApiaryController::class, 'index']);
 
 // Show create apiary form
-Route::get('/apiaries/create', [ApiaryController::class, 'create'])->middleware('auth');
+Route::get('/apiaries/create', [ApiaryController::class, 'create'])->middleware('auth')->name('apiaries_create');
 
 // Manage apiaries
 Route::get('/apiaries/manage', [ApiaryController::class, 'manage'])->middleware('auth');
