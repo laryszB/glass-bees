@@ -1,21 +1,64 @@
-<x-layout>
+<x-layout class="bg-fuchsia-50">
 
-    @foreach ($apiaries as $apiary)
-        <div class="border-b border-gray-200">
-            <h2 class="px-4 py-2 bg-gray-200">{{ $apiary->name }}</h2>
-            @foreach ($apiary->beehives as $beehive)
-                <h3 class="px-4 py-2 bg-gray-100">{{ $beehive->name }}</h3>
-                @foreach ($beehive->food->sortByDesc('pivot.feeding_date') as $feeding)
-                    <div class="p-4 space-y-2">
-                        <p>Nazwa pokarmu: {{ $feeding->name }}</p>
-                        <p>Data karmienia: {{ $feeding->pivot->feeding_date }}</p>
-                        <p>Ilość: {{ $feeding->pivot->amount }}</p>
-                        <p>Notatki: {{ $feeding->pivot->note }}</p>
-                    </div>
-                @endforeach
-            @endforeach
-        </div>
-    @endforeach
+    <div class="text-center mt-4">
+        <h1 class="text-4xl font-bold uppercase">Rejestr karmień</h1>
+    </div>
 
+    <div class="divide-y divide-gray-200 max-w-4xl mx-auto mt-8 text-white">
+        @foreach ($apiaries as $apiary)
+            <div class="py-4" x-data="{ apiaryOpen: false }">
+                <h2 class="px-4 py-2 bg-purple-800 cursor-pointer" @click="apiaryOpen = !apiaryOpen">
+                    <i class="fa-solid fa-wheat-awn"></i>  {{ $apiary->name }}
+                    <i x-show="!apiaryOpen" class="fa-solid fa-chevron-down"></i>
+                    <i x-show="apiaryOpen" class="fa-solid fa-chevron-up"></i>
+                </h2>
+
+                <div x-show="apiaryOpen" x-cloak>
+                    @foreach ($apiary->beehives as $beehive)
+                        <div class="px-4 py-2 bg-purple-600" x-data="{ beehiveOpen: false }">
+                            <div class="cursor-pointer" @click="beehiveOpen = !beehiveOpen">
+                                {{ $beehive->name }}
+                                @if($beehive->food->count() > 0)
+                                    <i data-tippy-content="Ule z tą ikonką posiadają zarejestrowane karmienia" class="fa-solid fa-utensils"></i>
+                                @endif
+                                <i x-show="!beehiveOpen" class="fa-solid fa-chevron-down"></i>
+                                <i x-show="beehiveOpen" class="fa-solid fa-chevron-up"></i>
+                            </div>
+
+                            <div x-show="beehiveOpen">
+                                @if($beehive->food->count() > 0)
+                                    @foreach ($beehive->food->sortByDesc('pivot.feeding_date') as $feeding)
+                                        <div class="px-4 py-2 bg-purple-400" x-data="{ feedingOpen: false }" :class="{ 'flex flex-col': feedingOpen, 'flex justify-between items-center': !feedingOpen }">
+                                            <div class="cursor-pointer" @click="feedingOpen = !feedingOpen">
+                                                Karmienie z dnia: {{ date('d-m-Y', strtotime($feeding->pivot->feeding_date)) }}
+                                                <i x-show="!feedingOpen" class="fa-solid fa-chevron-down"></i>
+                                                <i x-show="feedingOpen" class="fa-solid fa-chevron-up"></i>
+                                            </div>
+
+                                            <x-delete-form action="{{ route('feedings_destroy', ['beehive_id' => $beehive->id, 'food_id' => $feeding->id]) }}" class="text-red-300 bg-red-800 px-2 hover:bg-red-500 hover:text-red-100" x-show="!feedingOpen">
+                                            </x-delete-form>
+
+                                            <div x-show="feedingOpen" class="p-4 space-y-2 w-full">
+                                                <p>Nazwa pokarmu: {{ $feeding->name }}</p>
+                                                <p>Ilość: {{ $feeding->pivot->amount }}</p>
+                                                <p>Godzina karmienia: {{ date('H:i', strtotime($feeding->pivot->feeding_date)) }}</p>
+                                                <p>Notatki: {{ $feeding->pivot->note }}</p>
+                                            </div>
+                                        </div>
+
+
+                                    @endforeach
+                                @else
+                                    <div class="p-4">
+                                        <p>W tym ulu nie ma żadnego zarejestrowanego karmienia.</p>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endforeach
+    </div>
 
 </x-layout>

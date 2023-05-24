@@ -104,9 +104,13 @@ class FeedingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($beehive_id, $food_id)
     {
-        //
+        $beehive = Beehive::find($beehive_id);
+        $beehive->food()->detach($food_id);
+
+        return redirect()->back()->with('message', 'Karmienie zostało usunięte pomyślnie.');
     }
+
 
 }

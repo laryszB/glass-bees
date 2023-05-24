@@ -17,7 +17,7 @@
                 class="rounded-t text-black bg-amber-100 hover:bg-amber-300 py-1 px-3 block whitespace-no-wrap font-medium"
                 href="/apiaries/create"
             >
-                <i class="fa-solid fa-wheat-awn" style="color: black;"></i> Utwórz pasiekę
+                    <i class="fa-solid fa-wheat-awn"></i> Utwórz pasiekę
             </a>
         </li>
         <li>

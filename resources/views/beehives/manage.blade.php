@@ -1,4 +1,7 @@
 <x-layout>
+    <div class="text-center mt-4">
+        <h1 class="text-4xl font-bold uppercase">Zarządzaj ulami</h1>
+    </div>
     @unless($apiaries->isEmpty())
     @foreach ($apiaries as $apiary)
         <div class="overflow-x-auto shadow-md sm:rounded-lg mx-10 mb-6">
