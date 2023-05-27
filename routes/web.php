@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApiaryController;
 use App\Http\Controllers\BeehiveController;
+use App\Http\Controllers\DiseasesCaseController;
 use App\Http\Controllers\FeedingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -74,19 +75,38 @@ Route::get('/apiaries/{apiary}/beehives/{beehive}', [BeehiveController::class, '
 //Update beehive note
 Route::put('/apiaries/{apiary}/beehives/{beehive}/note/update', [BeehiveController::class, 'updateNote'])->middleware('auth')->name('beehives_note_update');
 
-
+//  *FEEDINGS*
 
 // Show create feeding form
-Route::get('/feedings', [FeedingController::class, 'create'])->middleware('auth')->name('feedings_create');
+Route::get('/feedings/create', [FeedingController::class, 'create'])->middleware('auth')->name('feedings_create');
 
 // Store feeding data
 Route::post('/feedings/store', [FeedingController::class, 'store'])->middleware('auth')->name('feedings_store');
 
 // View all feeding
-Route::get('/feedings/list', [FeedingController::class, 'index'])->middleware('auth')->name('feedings_list');
+Route::get('/feedings', [FeedingController::class, 'index'])->middleware('auth')->name('feedings_list');
 
 // Delete feeding
 Route::delete('/feedings/{beehive_id}/{food_id}/delete', [FeedingController::class, 'destroy'])->middleware('auth')->name('feedings_destroy');
+
+
+//  *BEE_DISEASES*
+
+// Show create diseases case form
+Route::get('/diseasescases/create', [DiseasesCaseController::class, 'create'])->middleware('auth')->name('diseasescases_create');
+
+// Store feeding data
+Route::post('/diseasescases/store', [DiseasesCaseController::class, 'store'])->middleware('auth')->name('diseasescases_store');
+
+// View all diseasescases
+Route::get('/diseasescases', [DiseasesCaseController::class, 'index'])->middleware('auth')->name('diseasescases_index');
+
+// Change disease status
+Route::patch('/diseasescases/{beehive_id}/{bee_disease_id}/update', [DiseasesCaseController::class, 'updateDiseaseCaseStatus'])->name('diseasescases_updateDiseaseCaseStatus');
+
+// Delete disease case record
+Route::delete('/diseasescases/{beehive_id}/{bee_disease_id}/delete', [DiseasesCaseController::class, 'destroy'])->middleware('auth')->name('diseasescases_destroy');
+
 
 
 

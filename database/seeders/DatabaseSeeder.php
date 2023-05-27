@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Apiary;
+use App\Models\BeeDisease;
 use App\Models\Food;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -28,5 +29,6 @@ class DatabaseSeeder extends Seeder
         $this->call(FloraSeeder::class);
         $this->call(BeehiveSeeder::class);
         $this->call(FoodSeeder::class);
+        $this->call(BeeDiseaseSeeder::class);
     }
 }

@@ -2,7 +2,7 @@
 
 
     <div class="text-center mt-4">
-        <h1 class="text-4xl font-bold uppercase">Rejestr karmień</h1>
+        <h1 class="text-4xl font-bold uppercase">Rejestr karmień <i class="fa-solid fa-utensils"></i></h1>
     </div>
 
     @if($apiaries->isEmpty())

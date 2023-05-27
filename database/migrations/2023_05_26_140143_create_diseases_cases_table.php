@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('feedings', function (Blueprint $table) {
+        Schema::create('diseases_cases', function (Blueprint $table) {
             $table->foreignId('beehive_id')->constrained()->onDelete('cascade');
-            $table->foreignId('food_id')->constrained()->onDelete('cascade');
-            $table->dateTime('feeding_date');
-            $table->decimal('amount');
-            $table->longText('note')->nullable();
+            $table->foreignId('bee_disease_id')->constrained()->onDelete('cascade');
+            $table->dateTime('date');
+            $table->longText('note');
+            $table->enum('status', ['nieleczona', 'w trakcie leczenia', 'uleczona']);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('feedings');
+        Schema::dropIfExists('diseases_cases');
     }
 };

@@ -123,7 +123,12 @@
                 $('#beehive_ids').select2({
                     placeholder: 'Rozwiń listę uli...',
                     closeOnSelect: false,
-                    theme: "classic"
+                    theme: "classic",
+                    "language": {
+                        "noResults": function(){
+                            return "Nie znaleziono podanego ula";
+                        }
+                    }
                 });
 
                 $('#clear-beehives').click(function (){

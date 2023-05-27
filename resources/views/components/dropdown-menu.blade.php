@@ -52,5 +52,21 @@
                 <i class="fa-solid fa-utensils"></i> Rejestr karmień
             </a>
         </li>
+        <li>
+            <a
+                class="rounded-t text-black bg-amber-100 hover:bg-amber-300 py-1 px-3 block whitespace-no-wrap font-medium"
+                href="{{route('diseasescases_create')}}"
+            >
+                <i class="fa-solid fa-syringe"></i> Choroby pszczół
+            </a>
+        </li>
+        <li>
+            <a
+                class="rounded-t text-black bg-amber-100 hover:bg-amber-300 py-1 px-3 block whitespace-no-wrap font-medium"
+                href="{{route('diseasescases_index')}}"
+            >
+                <i class="fa-solid fa-syringe"></i> Rejestr chorób
+            </a>
+        </li>
     </ul>
 </div>

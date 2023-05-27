@@ -3,7 +3,7 @@
     <a href="/" class="inline-block text-black ml-4 mb-4"
     ><i class="fa-solid fa-arrow-left"></i> Back
     </a>
-    <div class="mx-60">
+    <div class="mx-auto flex justify-center">
         <x-card class="bg-amber-900">
             <div
                 class="flex flex-col items-center justify-center text-center"

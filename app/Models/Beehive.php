@@ -40,7 +40,7 @@
             return $this->belongsTo(Apiary::class);
         }
 
-        //Relationship to Beehives (many to many)
+        //Relationship to Food (many to many)
         public function food(): BelongsToMany
         {
             return $this->belongsToMany(Food::class, 'feedings')
@@ -48,4 +48,11 @@
                 ->withTimestamps(); // tylko jeśli chcesz obsługiwać created_at i updated_at
         }
 
+        //Relationship to BeeDiseases (many to many)
+        public function bee_diseases(): BelongsToMany
+        {
+            return $this->belongsToMany(BeeDisease::class, 'diseases_cases')
+                ->withPivot('date', 'note', 'status')
+                ->withTimestamps();
+        }
     }
