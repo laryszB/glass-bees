@@ -162,6 +162,20 @@
             </div>
 
             <div class="mb-6">
+                <label for="beehive_accessory" class="inline-block text-lg mb-2 text-white">Akcesoria</label>
+                <select id="beehive_accessory" name="beehive_accessory[]" multiple>
+                    @foreach($beehiveAccessories as $beehiveAccessory)
+                        <option value="{{ $beehiveAccessory->id }}">{{ $beehiveAccessory->name }}</option>
+                    @endforeach
+                </select>
+
+                @error('flora')
+                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                @enderror
+
+            </div>
+
+            <div class="mb-6">
                 <label
                     for="note"
                     class="inline-block text-lg mb-2 text-white"

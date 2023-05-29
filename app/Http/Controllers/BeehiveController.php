@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Apiary;
 use App\Models\Beehive;
+use App\Models\BeehiveAccessory;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Policies\BeehivePolicy;
@@ -34,7 +35,9 @@ class BeehiveController extends Controller
     {
         $this->authorize('create', [Beehive::class, $apiary]); //sprawdź czy użytkownik dodaje ul do swojej pasieki
 
-        return view('beehives.create', compact('apiary'));
+        $beehiveAccessories = BeehiveAccessory::all();
+
+        return view('beehives.create', compact('apiary', 'beehiveAccessories'));
     }
 
     /**
@@ -55,6 +58,7 @@ class BeehiveController extends Controller
             'extensions' => ['required', 'numeric', 'integer'],
             'half_extensions' => ['required', 'numeric', 'integer'],
             'frames' => ['required', 'numeric', 'integer'],
+            'beehive_accessory' => ['required', 'array', 'min:1'],
             'note' => []
         ]);
 
@@ -62,8 +66,11 @@ class BeehiveController extends Controller
 
         $formFields['apiary_id'] = $apiary->id;
 
+
+
         for ($i = 0; $i < $quantity; $i++){
             $beehive = Beehive::create($formFields);
+            $beehive->beehiveAccessories()->sync($request->input('beehive_accessory', [])); //pobranie tablicy wartości dla beehiveAccessory z requesta i zsychnronizowanie z relacją
         }
 
         return redirect()->route('beehives_index', $apiary)->with('message', 'Ul został pomyślnie utworzony');
@@ -93,7 +100,9 @@ class BeehiveController extends Controller
     {
         $this->authorize('update', $beehive);
 
-        return view('beehives.edit', compact('apiary', 'beehive'));
+        $beehiveAccessories = BeehiveAccessory::all();
+
+        return view('beehives.edit', compact('apiary', 'beehive', 'beehiveAccessories'));
     }
 
     /**
@@ -120,6 +129,9 @@ class BeehiveController extends Controller
         $formFields['note'] = str_replace(array("\r", "\n"), ' ', $request->input('note')); // zamień znaki nowej lini na spację dopóki nie naprawię alpine.js przy okienku notatki
 
         $beehive->update($formFields);
+
+        $beehive->beehiveAccessories()->sync($request->input('beehive_accessory', [])); //zaktualizacji tablice asocjacyjną beehive_beehive_accessories w relacji many to many
+
 
         return back()->with('message', 'Ul został zaktualizowany!');
     }

@@ -16,6 +16,9 @@
                     </a>
                 </h3>
                 <div class="border border-gray-200 w-full mb-6"></div>
+                <h3 class="text-3xl text-white font-bold mb-4">
+                    Dane <i class="fas fa-cubes"></i>
+                </h3>
                 <ul class="flex flex-col lg:justify-center lg:flex-row">
                     <li
                         class="flex items-center justify-center bg-amber-700 text-white rounded py-1 px-3 mr-2 text-xs mb-2 lg:mb-0"
@@ -61,6 +64,17 @@
                         </p>
                     </li>
                 </ul>
+                <div class="border border-gray-200 w-full mb-6 mt-6"></div>
+                <div>
+                    <h3 class="text-3xl text-white font-bold mb-4">
+                        Akcesoria <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </h3>
+                    <div class="flex flex-col space-y-2 md:flex-row md:space-y-0">
+                    @foreach($beehive->beehiveAccessories as $beehiveAccessory)
+                        <span data-tippy-content="{{$beehiveAccessory->description}}" class="bg-sky-900 px-4 py-1 mr-2 rounded text-lg text-white whitespace-pre cursor-default">{{$beehiveAccessory->name}}</span>
+                    @endforeach
+                    </div>
+                </div>
                 <div class="border border-gray-200 w-full mb-6 mt-6"></div>
                 <div>
                     <h3 class="text-3xl text-white font-bold mb-4">

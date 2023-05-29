@@ -61,4 +61,10 @@
         {
             return $this->hasOne(BeeColony::class);
         }
+
+        //Relationship to BeehiveAccessory (many to many)
+        public function beehiveAccessories(): BelongsToMany
+        {
+            return $this->belongsToMany(BeehiveAccessory::class, 'beehive_beehive_accessories');
+        }
     }

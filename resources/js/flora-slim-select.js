@@ -7,6 +7,15 @@ export function floraSlimSelect() {
             searchPlaceholder: 'Szukaj roślin...',
         }
     });
+
+    new SlimSelect({
+        select: '#beehive_accessory',
+        settings: {
+            placeholderText: 'Wybierz akcesoria',
+            closeOnSelect: false,
+            searchPlaceholder: 'Szukaj akcesoriów...',
+        }
+    });
 }
 
 export function feedingsSlimSelect() {
