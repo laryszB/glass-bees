@@ -81,5 +81,8 @@
         <x-flash-message>
         </x-flash-message>
 
+        <x-flash-message-error>
+        </x-flash-message-error>
+
     </body>
 </html>

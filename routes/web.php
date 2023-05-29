@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiaryController;
+use App\Http\Controllers\BeeColonyController;
 use App\Http\Controllers\BeehiveController;
 use App\Http\Controllers\DiseasesCaseController;
 use App\Http\Controllers\FeedingController;
@@ -95,10 +96,10 @@ Route::delete('/feedings/{beehive_id}/{food_id}/delete', [FeedingController::cla
 // Show create diseases case form
 Route::get('/diseasescases/create', [DiseasesCaseController::class, 'create'])->middleware('auth')->name('diseasescases_create');
 
-// Store feeding data
+// Store diseases cases data
 Route::post('/diseasescases/store', [DiseasesCaseController::class, 'store'])->middleware('auth')->name('diseasescases_store');
 
-// View all diseasescases
+// View all diseases cases
 Route::get('/diseasescases', [DiseasesCaseController::class, 'index'])->middleware('auth')->name('diseasescases_index');
 
 // Change disease status
@@ -106,6 +107,21 @@ Route::patch('/diseasescases/{beehive_id}/{bee_disease_id}/update', [DiseasesCas
 
 // Delete disease case record
 Route::delete('/diseasescases/{beehive_id}/{bee_disease_id}/delete', [DiseasesCaseController::class, 'destroy'])->middleware('auth')->name('diseasescases_destroy');
+
+
+// *BEE_COLONIES*
+
+// Show create bee colony form
+Route::get('/apiaries/{apiary}/beehives/{beehive}/beecolony/create', [BeeColonyController::class, 'create'])->middleware('auth')->name('beecolonies_create');
+
+// Store bee colony data
+Route::post('/apiaries/{apiary}/beehives/{beehive}/beecolony', [BeeColonyController::class, 'store'])->middleware('auth')->name('beecolonies_store');
+
+//Show edit bee colony form
+Route::get('/apiaries/{apiary}/beehives/{beehive}/beecolonies/{beeColony}/edit', [BeeColonyController::class, 'edit'])->middleware('auth')->name('beecolonies_edit');
+
+Route::put('/apiaries/{apiary}/beehives/{beehive}/beecolonies/{beeColony}', [BeeColonyController::class, 'update'])->middleware('auth')->name('beecolonies_update');
+
 
 
 

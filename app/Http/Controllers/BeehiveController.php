@@ -19,7 +19,7 @@ class BeehiveController extends Controller
         if (auth()->check()) {
             $user = auth()->user();
             $apiary = $user->apiaries()->findOrFail($apiary);
-            $beehives = $apiary->beehives()->paginate(12);
+            $beehives = $apiary->beehives()->paginate(10);
             return view('beehives.index', compact('apiary', 'beehives'));
         } else {
             abort(403);
@@ -42,7 +42,6 @@ class BeehiveController extends Controller
      */
     public function store(Request $request, Apiary $apiary)
     {
-
         $request->validate(['quantity' => ['required', 'integer', 'min:1', 'max:10']]);
 
         $quantity = $request->input('quantity');
@@ -77,6 +76,8 @@ class BeehiveController extends Controller
     public function show(Apiary $apiary, Beehive $beehive)
     {
         $this->authorize('view', $beehive); // sprawdź czy ul który użytkownik próbuje wyświetlić należy faktycznie do niego, więcej w app/Policies/BeehivePolicy
+
+        $beehive->load('beeColony');
 
         return view('beehives.show', [
             'apiary' => $apiary,

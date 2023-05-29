@@ -55,4 +55,10 @@
                 ->withPivot('date', 'note', 'status')
                 ->withTimestamps();
         }
+
+        //Relationship to BeeColony
+        public function beeColony()
+        {
+            return $this->hasOne(BeeColony::class);
+        }
     }

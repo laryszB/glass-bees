@@ -23,7 +23,7 @@
                 <i class="fa-solid fa-seedling" style="color: #15803d;"></i>
                 Roślinność:
                 @foreach($apiary->floras as $flora)
-                    <span class="bg-green-100 px-2 rounded text-lg whitespace-pre">{{$flora->name}}</span>
+                    <span data-tippy-content="{{$flora->description}}" class="bg-green-100 px-2 rounded text-lg whitespace-pre cursor-default">{{$flora->name}}</span>
                 @endforeach
             </div>
             <div class="text-lg mt-4">
