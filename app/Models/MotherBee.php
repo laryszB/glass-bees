@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class BeeColony extends Model
+class MotherBee extends Model
 {
     use HasFactory;
 
@@ -17,10 +17,12 @@ class BeeColony extends Model
      */
     protected $fillable = [
         'beehive_id',
-        'name',
-        'strength',
-        'temperament',
-        'description',
+        'race',
+        'line',
+        'placement_date',
+        'birth_date',
+        'state',
+        'note'
     ];
 
     //Relationship to Beehive

@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 
+    <link rel="icon" href="images/bee_icon.png">
+
     {{--    Import Slim Select library--}}
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
@@ -27,7 +29,17 @@
     @vite('resources/js/app.js')
 </head>
     <body {{$attributes->merge(['class' => 'mb-48'])}}>
-    <nav class="flex justify-between items-center mb-4">
+
+    <div class="absolute top-0 left-0 z-10 ">
+        <a href="/"><img class="lg:w-24 w-16" src="{{asset('images/bee_logo.png')}}" alt="" class="logo" /></a>
+    </div>
+
+    {{--    Menu boczne dla mniejszych ekranów--}}
+    <x-side-menu>
+    </x-side-menu>
+
+
+    <nav class="hidden lg:flex justify-between items-center mb-4">
             <a href="/"
             ><img class="w-24" src="{{asset('images/bee_logo.png')}}" alt="" class="logo"
                 /></a>
@@ -37,8 +49,12 @@
                     <span class="font-bold uppercase">Witaj, {{auth()->user()->username}}</span>
                 </li>
                 <li>
-                    <x-dropdown-menu>
-                    </x-dropdown-menu>
+                    <x-dropdown-menu-apiary>
+                    </x-dropdown-menu-apiary>
+                </li>
+                <li>
+                    <x-dropdown-menu-bees>
+                    </x-dropdown-menu-bees>
                 </li>
                 <li>
                       <form class="inline" method="POST" action="/logout">
@@ -70,7 +86,7 @@
             {{$slot}}
         </main>
 
-        <footer class="fixed bottom-0 left-0 w-full flex items-center justify-start font-bold bg-laravel text-white h-16 mt-2 opacity-90 md:justify-center">
+        <footer class="fixed bottom-0 left-0 w-full flex items-center justify-start font-bold bg-laravel text-white h-16 mt-2 opacity-90 justify-center">
             <p class="ml-2">Copyright &copy; 2023, All Rights reserved</p>
         </footer>
 

@@ -98,7 +98,7 @@
                     Stwórz rodzinę pszczelą
                 </button>
 
-                <a href="/" class="text-white ml-4"> Powrót </a>
+                <a href="{{route('beehives_show', ['apiary' => $apiary, 'beehive' => $beehive])}}" class="text-white ml-4"> Powrót </a>
             </div>
         </form>
     </x-card>

@@ -5,6 +5,7 @@ use App\Http\Controllers\BeeColonyController;
 use App\Http\Controllers\BeehiveController;
 use App\Http\Controllers\DiseasesCaseController;
 use App\Http\Controllers\FeedingController;
+use App\Http\Controllers\MotherBeeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,22 +29,22 @@ Route::get('/', [ApiaryController::class, 'index']);
 Route::get('/apiaries/create', [ApiaryController::class, 'create'])->middleware('auth')->name('apiaries_create');
 
 // Manage apiaries
-Route::get('/apiaries/manage', [ApiaryController::class, 'manage'])->middleware('auth');
+Route::get('/apiaries/manage', [ApiaryController::class, 'manage'])->middleware('auth')->name('apiaries_manage');
 
 //Show edit apiary form
-Route::get('/apiaries/{apiary}/edit', [ApiaryController::class, 'edit'])->middleware('auth');
+Route::get('/apiaries/{apiary}/edit', [ApiaryController::class, 'edit'])->middleware('auth')->name('apiaries_edit');
 
 //Update apiary
-Route::put('/apiaries/{apiary}', [ApiaryController::class, 'update'])->middleware('auth');
+Route::put('/apiaries/{apiary}', [ApiaryController::class, 'update'])->middleware('auth')->name('apiaries_update');
 
 //Delete apiary
-Route::delete('/apiaries/{apiary}', [ApiaryController::class, 'destroy'])->middleware('auth');
+Route::delete('/apiaries/{apiary}', [ApiaryController::class, 'destroy'])->middleware('auth')->name('apiaries_destroy');
 
 // Store apiary data
-Route::post('/apiaries', [ApiaryController::class, 'store'])->middleware('auth');
+Route::post('/apiaries', [ApiaryController::class, 'store'])->middleware('auth')->name('apiaries_store');
 
 //Single apiary
-Route::get('/apiaries/{apiary}', [ApiaryController::class, 'show'])->middleware('auth');
+Route::get('/apiaries/{apiary}', [ApiaryController::class, 'show'])->middleware('auth')->name('apiaries_show');
 
 
 //  *BEEHIVES*
@@ -120,7 +121,22 @@ Route::post('/apiaries/{apiary}/beehives/{beehive}/beecolony', [BeeColonyControl
 //Show edit bee colony form
 Route::get('/apiaries/{apiary}/beehives/{beehive}/beecolonies/{beeColony}/edit', [BeeColonyController::class, 'edit'])->middleware('auth')->name('beecolonies_edit');
 
+//Update bee colony data
 Route::put('/apiaries/{apiary}/beehives/{beehive}/beecolonies/{beeColony}', [BeeColonyController::class, 'update'])->middleware('auth')->name('beecolonies_update');
+
+// *MOTHER_BEE*
+
+// Show create mother bee form
+Route::get('/apiaries/{apiary}/beehives/{beehive}/motherbees/create', [MotherBeeController::class, 'create'])->middleware('auth')->name('motherbees_create');
+
+// Store mother bee data
+Route::post('/apiaries/{apiary}/beehives/{beehive}/motherbees', [MotherBeeController::class, 'store'])->middleware('auth')->name('motherbees_store');
+
+//Show edit bee colony form
+Route::get('/apiaries/{apiary}/beehives/{beehive}/motherbees/{motherBee}/edit', [MotherBeeController::class, 'edit'])->middleware('auth')->name('motherbees_edit');
+
+//Update bee colony data
+Route::put('/apiaries/{apiary}/beehives/{beehive}/motherbees/{motherBee}', [MotherBeeController::class, 'update'])->middleware('auth')->name('motherbees_update');
 
 
 

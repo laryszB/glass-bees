@@ -1,5 +1,5 @@
 <div class="flex flex-wrap" >
-    <div class="w-1/5 p-4">
+    <div class="lg:w-1/5 p-4">
         <div class="bg-amber-50 rounded-lg shadow overflow-hidden transform hover:scale-105 transition-transform duration-300"
              x-data="{ isHovered: false }"
              @mouseover="isHovered = true"
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="w-1/5 p-4">
+    <div class="lg:w-1/5 p-4">
         <div class="bg-amber-50 rounded-lg shadow overflow-hidden transform hover:scale-105 transition-transform duration-300"
              x-data="{ isHovered: false }"
              @mouseover="isHovered = true"
@@ -49,7 +49,7 @@
         </div>
     </div>
 
-    <div class="w-1/5 p-4">
+    <div class="lg:w-1/5 p-4">
         <div class="bg-amber-50 rounded-lg shadow overflow-hidden transform hover:scale-105 transition-transform duration-300"
              x-data="{ isHovered: false }"
              @mouseover="isHovered = true"
@@ -74,7 +74,7 @@
         </div>
     </div>
 
-    <div class="w-1/5 p-4">
+    <div class="lg:w-1/5 p-4">
         <div class="bg-amber-50 rounded-lg shadow overflow-hidden transform hover:scale-105 transition-transform duration-300"
              x-data="{ isHovered: false }"
              @mouseover="isHovered = true"
@@ -98,7 +98,7 @@
         </div>
     </div>
 
-    <div class="w-1/5 p-4">
+    <div class="lg:w-1/5 p-4">
         <div class="bg-amber-50 rounded-lg shadow overflow-hidden transform hover:scale-105 transition-transform duration-300"
              x-data="{ isHovered: false }"
              @mouseover="isHovered = true"

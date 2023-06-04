@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Apiary;
-use App\Models\BeeColony;
 use App\Models\Beehive;
+use App\Models\MotherBee;
 use Illuminate\Http\Request;
 
-class BeeColonyController extends Controller
+class MotherBeeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -33,13 +33,12 @@ class BeeColonyController extends Controller
         }
 
         // Sprawdzamy, czy istnieje już rodzina pszczela dla danego ula
-        if ($beehive->beeColony) {
-            return redirect()->back()->withErrors(['beeColony' => 'Rodzina pszczela dla tego ula już istnieje.']);
+        if ($beehive->motherBee) {
+            return redirect()->back()->withErrors(['motherBee' => 'Matka jest już dodana do tego ula!']);
         }
 
-        return view('bee_colonies.create', compact('apiary', 'beehive'));
+        return view('mother_bees.create', compact('apiary', 'beehive'));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -57,23 +56,25 @@ class BeeColonyController extends Controller
             abort(403); // Forbidden
         }
 
-        // Sprawdzamy, czy istnieje już rodzina pszczela dla danego ula
-        if ($beehive->beeColony) {
-            return redirect()->back()->withErrors(['beeColony' => 'Rodzina pszczela dla tego ula już istnieje.']);
+        // Sprawdzamy, czy istnieje już matka pszczela dla danego ula
+        if ($beehive->motherBee) {
+            return redirect()->back()->withErrors(['motherBee' => 'Matka jest już dodana do tego ula!']);
         }
 
         $formFields = $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'required',
-            'strength' => 'required|in:bardzo słaba,słaba,normalna,silna,bardzo silna',
-            'temperament' => 'required|in:bardzo łagodny,łagodny,normalny,agresywny,bardzo agresywny'
+            'race' => 'required|max:255',
+            'line' => 'required|max:255',
+            'placement_date' => 'required|date',
+            'birth_date' => 'required|date|before:placement_date',
+            'state' => 'required|in:unasieniona,nieunasieniona,trutniowa',
+            'note' => ''
         ]);
 
         $formFields['beehive_id'] = $beehive->id;
 
-        $beeColony = BeeColony::create($formFields);
+        $motherBee = MotherBee::create($formFields);
 
-        return redirect()->route('beehives_show', ['apiary' => $apiary, 'beehive' => $beehive])->with('message', 'Rodzina została pomyślnie utworzona!');
+        return redirect()->route('beehives_show', ['apiary' => $apiary, 'beehive' => $beehive])->with('message', 'Matka została pomyślnie dodana!');
     }
 
     /**
@@ -87,7 +88,7 @@ class BeeColonyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Apiary $apiary, Beehive $beehive, BeeColony $beeColony)
+    public function edit(Apiary $apiary, Beehive $beehive, MotherBee $motherBee)
     {
         if (auth()->user()->id !== $apiary->user_id) {
             abort(403); // Forbidden
@@ -98,19 +99,18 @@ class BeeColonyController extends Controller
             abort(404);
         }
 
-        // Upewnij się, że beeColony należy do podanego beehive
-        if ($beeColony->beehive->id !== $beehive->id) {
+        // Upewnij się, że motherBee należy do podanego beehive
+        if ($motherBee->beehive->id !== $beehive->id) {
             abort(404);
         }
 
-        return view('bee_colonies.edit', compact('apiary', 'beehive', 'beeColony'));
+        return view('mother_bees.edit', compact('apiary', 'beehive', 'motherBee'));
     }
-
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Apiary $apiary, Beehive $beehive, BeeColony $beeColony)
+    public function update(Request $request, Apiary $apiary, Beehive $beehive, MotherBee $motherBee)
     {
         // Upewniamy się, że beehive należy do podanej apiary
         if ($beehive->apiary->id !== $apiary->id) {
@@ -123,17 +123,19 @@ class BeeColonyController extends Controller
         }
 
         $formFields = $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'required',
-            'strength' => 'required|in:bardzo słaba,słaba,normalna,silna,bardzo silna',
-            'temperament' => 'required|in:bardzo łagodny,łagodny,normalny,agresywny,bardzo agresywny'
+            'race' => 'required|max:255',
+            'line' => 'required|max:255',
+            'placement_date' => 'required|date',
+            'birth_date' => 'required|date|before:placement_date',
+            'state' => 'required|in:unasieniona,nieunasieniona,trutniowa',
+            'note' => ''
         ]);
 
         $formFields['beehive_id'] = $beehive->id;
 
-        $beeColony->update($formFields);
+        $motherBee->update($formFields);
 
-        return redirect()->route('beehives_show', ['apiary' => $apiary, 'beehive' => $beehive])->with('message', 'Rodzina pszczela została zaktualizowana!');
+        return redirect()->route('beehives_show', ['apiary' => $apiary, 'beehive' => $beehive])->with('message', 'Matka pszczela została zaktualizowana!');
     }
 
     /**
