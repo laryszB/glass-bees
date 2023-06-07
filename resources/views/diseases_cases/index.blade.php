@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    @if($apiaries->isEmpty())
+    @if(!$anyDiseases)
         <div class="flex flex-col items-center mt-6">
             <p >Nie zarejestrowałeś jeszcze żadnej choroby. </p>
             <span class="text-fuchsia-600 hover:text-fuchsia-400"><a href="{{route('diseasescases_create')}}">Chcesz to zrobić? <i class="fa-solid fa-syringe"></i></a></span>

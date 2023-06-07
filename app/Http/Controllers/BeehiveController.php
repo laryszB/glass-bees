@@ -58,7 +58,7 @@ class BeehiveController extends Controller
             'extensions' => ['required', 'numeric', 'integer'],
             'half_extensions' => ['required', 'numeric', 'integer'],
             'frames' => ['required', 'numeric', 'integer'],
-            'beehive_accessory' => ['required', 'array', 'min:1'],
+            'beehive_accessory' => ['array', 'min:1'],
             'note' => []
         ]);
 
@@ -156,7 +156,7 @@ class BeehiveController extends Controller
         $this->authorize('delete', $beehive);
 
         $beehive->delete();
-        return redirect()->back()->with('message', 'Ul został usunięty!');
+        return redirect()->route('beehives_index', $apiary)->with('message', 'Ul został usunięty!');
     }
 
     /**

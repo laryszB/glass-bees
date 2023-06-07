@@ -3,7 +3,7 @@
 
     <div x-data="{ showDetails: false }">
 
-        <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+        <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
             <h1 class="bg-amber-200 md:py-2 px-6 py-6 text-lg font-medium rounded text-center">
                 Ule należące do pasieki:
                 <a href="/apiaries/{{$apiary->id}}" class="block md:inline mt-2">
@@ -12,10 +12,10 @@
                 </span>
                 </a>
             </h1>
-            <a class="bg-orange-900 px-4 py-2 rounded text-lg text-white hover:bg-orange-700 text-center" href="{{ route('beehives_create', $apiary) }}">
-                DODAJ NOWY UL <i class="fa-solid fa-plus"></i>
+            <a class="bg-orange-900 px-4 py-2 rounded text-lg text-white hover:bg-orange-700 text-center font-bold" href="{{ route('beehives_create', $apiary) }}">
+                Dodaj nowy ul <i class="fa-solid fa-plus"></i>
             </a>
-            <button @click="showDetails = !showDetails" class="bg-orange-800 hover:bg-orange-600 text-white text-lg font-bold py-2 px-4 rounded">
+            <button @click="showDetails = !showDetails" class="bg-orange-900 hover:bg-orange-700 text-white text-lg font-bold py-2 px-4 rounded">
                 Szczegóły uli <i class="fa-solid fa-up-down"></i>
             </button>
         </div>
@@ -30,7 +30,7 @@
                                 <i class="fa-regular fa-note-sticky text-white hover:text-amber-200 hover:cursor-pointer fa-xl" @click="showModal = true"></i>
                             </div>
                         </div>
-                        <div x-show="showDetails">
+                        <div x-cloak x-show="showDetails">
                             <div class="flex justify-between items-center mb-4">
                                 <p class="text-gray-400 text-lg pr-6">Typ ula:</p>
                                 <p class="text-gray-100 text-lg">{{$beehive->type}}</p>
@@ -63,9 +63,9 @@
                         </div>
 
                         <div class="flex justify-between mt-4">
-                            <a href="{{route('beehives_show', ['apiary'=>$apiary, 'beehive' => $beehive])}}" class="bg-green-900 hover:bg-green-800 text-white py-1 px-2 rounded mr-2"><i class="fa-regular fa-clipboard"></i> Więcej</a>
-                            <a href="{{route('beehives_edit', ['apiary'=>$apiary, 'beehive' => $beehive])}}" class="bg-blue-900 hover:bg-blue-800 text-white py-1 px-2 rounded mr-2"> <i class="fa-solid fa-pen"></i> Edytuj</a>
-                            <x-delete-form class="bg-red-900 hover:bg-red-800 text-white py-1 px-2 rounded" action="{{route('beehives_delete', ['apiary'=>$apiary, 'beehive' => $beehive])}}">
+                            <a href="{{route('beehives_show', ['apiary'=>$apiary, 'beehive' => $beehive])}}" class="bg-amber-300 hover:bg-amber-200 text-black py-1 px-2 rounded mr-2 font-semibold"><i class="fa-regular fa-clipboard"></i> Więcej</a>
+                            <a href="{{route('beehives_edit', ['apiary'=>$apiary, 'beehive' => $beehive])}}" class="bg-amber-300 hover:bg-amber-200 text-black py-1 px-2 rounded mr-2 font-semibold"> <i class="fa-solid fa-pen"></i> Edytuj</a>
+                            <x-delete-form class="bg-amber-300 hover:bg-amber-200 text-black py-1 px-2 rounded font-semibold" action="{{route('beehives_delete', ['apiary'=>$apiary, 'beehive' => $beehive])}}">
                             </x-delete-form>
                         </div>
 

@@ -5,7 +5,7 @@
         <h1 class="text-4xl font-bold uppercase">Rejestr karmień <i class="fa-solid fa-utensils"></i></h1>
     </div>
 
-    @if($apiaries->isEmpty())
+    @if(!$anyFeedings)
         <div class="flex flex-col items-center mt-6">
             <p >Nie zarejestrowałeś jeszcze żadnego karmienia. </p>
             <span class="text-fuchsia-600 hover:text-fuchsia-400"><a href="{{route('feedings_create')}}">Chcesz to zrobić? <i class="fa-solid fa-utensils"></i></a></span>

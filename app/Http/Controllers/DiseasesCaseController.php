@@ -24,8 +24,22 @@ class DiseasesCaseController extends Controller
             }
         }])->get();
 
+        // Pobierz wszystkie pasieki wraz z ulami i chorobami
+        $allApiaries = auth()->user()->apiaries()->with(['beehives.food'])->get();
+
+        $anyDiseases = false;
+
+        foreach ($allApiaries as $apiary) {
+            foreach ($apiary->beehives as $beehive) {
+                if (!$beehive->bee_diseases->isEmpty()) {
+                    $anyDiseases = true;
+                    break 2;
+                }
+            }
+        }
+
         // Przekaż dane do widoku
-        return view('diseases_cases.index', ['apiaries' => $apiaries]);
+        return view('diseases_cases.index', ['apiaries' => $apiaries, 'anyDiseases' => $anyDiseases]);
     }
 
 

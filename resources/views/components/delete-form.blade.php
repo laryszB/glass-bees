@@ -8,7 +8,7 @@
     @csrf
     @method('DELETE')
 
-    <button {{$attributes->merge(['class' => 'text-red-500'])}} @click.prevent="confirmDelete = true">
+    <button {{$attributes->merge(['class' => ''])}} @click.prevent="confirmDelete = true">
         <i class="fa-solid fa-trash"></i>
         Usuń
     </button>
