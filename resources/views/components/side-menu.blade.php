@@ -12,7 +12,6 @@
          class="absolute right-0 top-0 w-64 h-screen p-4 z-50 bg-laravel text-white"
          @click.away="open = false"
     >
-        <!-- Zawartość nawigacji -->
         <button @click="open = !open" class="p-2"><i class="fa-solid fa-xmark fa-xl"></i></button>
         @auth
             <!-- Zawartość dla zalogowanych użytkowników -->
@@ -76,6 +75,14 @@
                         </a>
                     </li>
                     <li class="pt-2">
+                        <a
+                            class="bg-yellow-800 py-1 px-3 rounded hover:bg-yellow-400"
+                            href="{{route('honeyharvests_create')}}"
+                        >
+                            <i class="fa-solid fa-jar"></i> Zbiór miodu
+                        </a>
+                    </li>
+                    <li class="pt-2">
                         <form class="inline" method="POST" action="/logout">
                             @csrf
                             <button type="submit" class="text-gray-200 hover:text-white">
@@ -86,7 +93,6 @@
                     </li>
                 </ul>
             </div>
-            <!-- Tutaj dodaj rozwijane menu dla 'Apiary' i 'Bees' -->
         @else
             <!-- Zawartość dla niezalogowanych użytkowników -->
             <a href="/register" class="text-gray-200 hover:text-white block mt-4"><i class="fa-solid fa-user-plus"></i> Zarejestruj się</a>

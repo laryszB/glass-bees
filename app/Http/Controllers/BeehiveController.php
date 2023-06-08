@@ -73,7 +73,7 @@ class BeehiveController extends Controller
             $beehive->beehiveAccessories()->sync($request->input('beehive_accessory', [])); //pobranie tablicy wartości dla beehiveAccessory z requesta i zsychnronizowanie z relacją
         }
 
-        return redirect()->route('beehives_index', $apiary)->with('message', 'Ul został pomyślnie utworzony');
+        return redirect('/')->with('message', 'Ul został pomyślnie utworzony');
     }
 
     /**

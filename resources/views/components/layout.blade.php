@@ -4,6 +4,10 @@
 
     <link rel="icon" href="images/bee_icon.png">
 
+    {{--    CHART JS--}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
     {{--    Import Slim Select library--}}
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
@@ -56,6 +60,10 @@
                     <x-dropdown-menu-bees>
                     </x-dropdown-menu-bees>
                 </li>
+                    <li>
+                        <x-dropdown-menu-harvests>
+                        </x-dropdown-menu-harvests>
+                    </li>
                 <li>
                       <form class="inline" method="POST" action="/logout">
                           @csrf

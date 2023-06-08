@@ -71,8 +71,15 @@ class Apiary extends Model
         return $this->belongsToMany(Flora::class);
     }
 
+    //Relationship to Beehive
     public function beehives(): hasMany
     {
         return $this->hasMany(Beehive::class);
+    }
+
+    //Relationship to HoneyHarvest
+    public function honeyHarvests(): hasMany
+    {
+        return $this->hasMany(HoneyHarvest::class);
     }
 }

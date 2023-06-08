@@ -5,6 +5,7 @@ use App\Http\Controllers\BeeColonyController;
 use App\Http\Controllers\BeehiveController;
 use App\Http\Controllers\DiseasesCaseController;
 use App\Http\Controllers\FeedingController;
+use App\Http\Controllers\HoneyHarvestController;
 use App\Http\Controllers\MotherBeeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -139,7 +140,12 @@ Route::get('/apiaries/{apiary}/beehives/{beehive}/motherbees/{motherBee}/edit', 
 Route::put('/apiaries/{apiary}/beehives/{beehive}/motherbees/{motherBee}', [MotherBeeController::class, 'update'])->middleware('auth')->name('motherbees_update');
 
 
+// *HONEY_HARVESTS*
+Route::get('honeyharvests', [HoneyHarvestController::class, 'index'])->middleware('auth')->name('honeyharvests_index');
 
+Route::get('honeyharvests/create', [HoneyHarvestController::class, 'create'])->middleware('auth')->name('honeyharvests_create');
+
+Route::post('honeyharvests/store', [HoneyHarvestController::class, 'store'])->middleware('auth')->name('honeyharvests_store');
 
 
 //Show register/create form
