@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Beehive;
 use App\Models\HoneyHarvest;
 use Illuminate\Http\Request;
 
@@ -14,17 +15,33 @@ class HoneyHarvestController extends Controller
     {
         if (auth()->check()) {
             $user = auth()->user(); // Pobierz dane zalogowanego użytkownika
-            $apiaries = $user->apiaries()->with('honeyHarvests')->get(); // Pobierz pasieki zalogowanego użytkownika razem z zbiorami
+            $apiaries = $user->apiaries()->with(['honeyHarvests' => function ($query) {
+                $query->orderBy('harvest_date', 'asc');
+            }])->get(); // Pobierz pasieki zalogowanego użytkownika razem z posortowanymi zbiorami
 
             $apiariesWithHarvestsGroupedByYear = $apiaries->map(function ($apiary) {
                 $harvestsGroupedByYear = $apiary->honeyHarvests->groupBy(function ($date) {
                     return date('Y', strtotime($date->harvest_date)); // grupowanie po roku
                 });
+
                 $apiary->harvestsGroupedByYear = $harvestsGroupedByYear;
                 return $apiary;
             });
 
-            return view('honey_harvests.index', ['apiaries' => $apiariesWithHarvestsGroupedByYear]);
+            // Zebranie unikalnych lat
+            $years = [];
+            foreach ($apiariesWithHarvestsGroupedByYear as $apiary) {
+                foreach ($apiary->harvestsGroupedByYear as $year => $harvests) {
+                    $years[] = $year;
+                }
+            }
+            $years = array_unique($years);
+            sort($years);
+
+            return view('honey_harvests.index', [
+                'apiaries' => $apiariesWithHarvestsGroupedByYear,
+                'years' => $years
+            ]);
         } else {
             abort(403);
         }
@@ -60,15 +77,15 @@ class HoneyHarvestController extends Controller
         // Dynamiczne ustawianie zasad walidacji
         $validationRules = [
             'apiary_id' => 'required|exists:apiaries,id',
-            'price' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:1',
             'harvest_date' => 'required|date',
         ];
 
         // Dodawanie zasad walidacji dla wagi lub objętości
         if ($isVolume) {
-            $validationRules['volume'] = 'required|numeric|min:0';
+            $validationRules['volume'] = 'required|numeric|min:1';
         } else {
-            $validationRules['weight'] = 'required|numeric|min:0';
+            $validationRules['weight'] = 'required|numeric|min:1';
         }
 
         //Walidacja
@@ -88,13 +105,19 @@ class HoneyHarvestController extends Controller
         $pricePerKg = $formFields['price'];
         $profit = $pricePerKg * $weight;
 
+        // Obliczanie średniej wartości wagi miodu na ul
+        $apiaryId = $formFields['apiary_id'];
+        $beehivesCount = Beehive::where('apiary_id', $apiaryId)->count();
+        $averageWeightPerHive = $weight / $beehivesCount;
+
         $formFields['weight'] = $weight;
         $formFields['volume'] = $volume;
         $formFields['profit'] = $profit;
+        $formFields['average_weight_per_beehive'] = $averageWeightPerHive;
 
         $honeyHarvest = HoneyHarvest::create($formFields);
 
-        return redirect('/')->with('message', 'Zbiór miodu został zarejestrowany!');
+        return redirect()->route('honeyharvests_index')->with('message', 'Zbiór miodu został zarejestrowany!');
 
 
 
@@ -127,8 +150,55 @@ class HoneyHarvestController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(HoneyHarvest $harvest)
     {
-        //
+        $harvest->delete();
+        return redirect()->route('honeyharvests_index')->with('message', 'Zbiór miodu został usunięty!');
     }
+
+    // Funkcja dla API pobierające dane do wykresu odnośnie zysków w widoku index honey_harvests (AJAX)
+    public function getDataForProfitChart(Request $request, $apiaryId)
+    {
+        $harvests = HoneyHarvest::where('apiary_id', $apiaryId)->orderBy('harvest_date')->get();
+
+        return response()->json($harvests);
+    }
+
+    // Funkcja dla API pobierające dane do wykresu odnośnie siły pasieki w widoku index honey_harvests (AJAX)
+    public function getDataForApiaryStrengthChart($year)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $apiaries = $user->apiaries()->with(['honeyHarvests' => function ($query) use ($year) {
+            $query->whereYear('harvest_date', $year);
+        }])->get();
+
+        $apiaryNames = [];
+        $averageWeights = [];
+
+        foreach ($apiaries as $apiary) {
+            $totalWeight = 0;
+            $harvestCount = 0;
+
+            foreach ($apiary->honeyHarvests as $harvest) {
+                $totalWeight += $harvest->average_weight_per_beehive;
+                $harvestCount++;
+            }
+
+            if ($harvestCount > 0) {
+                $apiaryNames[] = $apiary->name;
+                $averageWeights[] = $totalWeight / $harvestCount;
+            }
+        }
+
+        return response()->json([
+            'apiaries' => $apiaryNames,
+            'average_weights' => $averageWeights,
+        ]);
+    }
+
+
 }

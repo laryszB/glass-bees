@@ -147,6 +147,8 @@ Route::get('honeyharvests/create', [HoneyHarvestController::class, 'create'])->m
 
 Route::post('honeyharvests/store', [HoneyHarvestController::class, 'store'])->middleware('auth')->name('honeyharvests_store');
 
+Route::delete('honeyharvests/{harvest}', [HoneyHarvestController::class, 'destroy'])->middleware('auth')->name('honeyharvests_destroy');
+
 
 //Show register/create form
 Route::get('/register', [UserController::class, 'create'])->middleware('guest');
@@ -162,6 +164,15 @@ Route::get('/login', [UserController::class, 'login'])->name('login')->middlewar
 
 //Login user
 Route::post('/users/authenticate', [UserController::class, 'authenticate']);
+
+
+
+
+//API
+Route::get('/api/profit-chart-data/{apiaryId}', [HoneyHarvestController::class, 'getDataForProfitChart'])->middleware('auth');
+
+Route::get('/api/apiaries-strength-chart-data/{year}', [HoneyHarvestController::class, 'getDataForApiaryStrengthChart'])->middleware('auth');
+
 
 
 

@@ -21,6 +21,7 @@ class HoneyHarvest extends Model
         'volume',
         'profit',
         'price',
+        'average_weight_per_beehive',
         'harvest_date'
     ];
 

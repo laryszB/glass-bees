@@ -42,7 +42,7 @@
                     </label>
 
                     <!-- Pole input z x-bind do dynamicznej zmiany atrybutów -->
-                    <input x-bind:name="isVolume ? 'volume' : 'weight'" type="number" min="0" value="0" class="border border-gray-600 rounded p-2 w-full bg-gray-300" id="weight-volume">
+                    <input x-bind:name="isVolume ? 'volume' : 'weight'" type="number" min="1" value="1" class="border border-gray-600 rounded p-2 w-full bg-gray-300" id="weight-volume">
 
                     @error('weight')
                     <p class="text-red-500 text-xs mt-1">{{$message}}</p>
@@ -60,7 +60,7 @@
                     <label for="price" class="inline-block text-lg mb-2 text-yellow-900">
                         Cena za kilogram (zł)
                     </label>
-                    <input type="number" name="price" min="0" value="0" class="border border-gray-600 rounded p-2 w-full bg-gray-300">
+                    <input type="number" name="price" min="1" value="1" class="border border-gray-600 rounded p-2 w-full bg-gray-300">
 
                     @error('price')
                     <p class="text-red-500 text-xs mt-1">{{$message}}</p>

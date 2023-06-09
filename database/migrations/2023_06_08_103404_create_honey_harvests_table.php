@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('volume');
             $table->decimal('price');
             $table->decimal('profit');
+            $table->decimal('average_weight_per_beehive');
             $table->date('harvest_date');
             $table->timestamps();
         });
