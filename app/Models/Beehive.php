@@ -7,6 +7,7 @@
     use Illuminate\Database\Eloquent\Model;
     use Illuminate\Database\Eloquent\Relations\BelongsTo;
     use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+    use Illuminate\Database\Eloquent\Relations\HasMany;
     use Illuminate\Database\Eloquent\Relations\HasOne;
 
     class Beehive extends Model
@@ -73,5 +74,12 @@
         public function motherBee(): hasOne
         {
             return $this->hasOne(MotherBee::class);
+        }
+
+        //Relationship to Inspection
+
+        public function inspections(): hasMany
+        {
+            return $this->hasMany(Inspection::class);
         }
     }

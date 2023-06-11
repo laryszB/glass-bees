@@ -6,6 +6,7 @@ use App\Http\Controllers\BeehiveController;
 use App\Http\Controllers\DiseasesCaseController;
 use App\Http\Controllers\FeedingController;
 use App\Http\Controllers\HoneyHarvestController;
+use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\MotherBeeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -148,6 +149,9 @@ Route::get('honeyharvests/create', [HoneyHarvestController::class, 'create'])->m
 Route::post('honeyharvests/store', [HoneyHarvestController::class, 'store'])->middleware('auth')->name('honeyharvests_store');
 
 Route::delete('honeyharvests/{harvest}', [HoneyHarvestController::class, 'destroy'])->middleware('auth')->name('honeyharvests_destroy');
+
+// *INSPECTIONS*
+Route::get('inspections', [InspectionController::class, 'index'])->middleware('auth')->name('inspections_index');
 
 
 //Show register/create form
