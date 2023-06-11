@@ -50,13 +50,15 @@
                     if (beehives[i]) {
                         const beehive = beehives[i];
                         const beehiveElement = `
-                            <div class="bg-yellow-300 text-center rounded-lg shadow-lg p-4">
+                            <div class="bg-yellow-300 text-center rounded-lg shadow-lg p-4 h-14">
                                 <p class="text-lg font-medium">${beehive.name}</p>
                             </div>
                         `;
                         beehivesDiv.innerHTML += beehiveElement;
                     } else {
-                        beehivesDiv.innerHTML += `<div></div>`;
+                        beehivesDiv.innerHTML += `<div class="bg-gray-300 text-center rounded-lg shadow-lg p-4 h-14">
+                                <p class="text-lg font-medium"></p>
+                            </div>`;
                     }
                 }
             } else {
