@@ -26,6 +26,8 @@ class Apiary extends Model
         'street_name',
         'city',
         'country',
+        'latitude',
+        'longitude',
         'zip_code',
         'photo'
     ];

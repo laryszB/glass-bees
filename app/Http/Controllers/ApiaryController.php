@@ -17,9 +17,10 @@ class ApiaryController extends Controller
      */
     public function index()
     {
-        if (auth()->check()){         // Sprawdzenie czy użytkownik jest zalogowany
-            $user = auth()->user(); // Pobierz dane zalogowanego użytkownika
-            $apiaries = $user->apiaries()->latest()->filter(request(['search']))->paginate(4); //Pobierz pasieki zalogowanego użytkownika
+        if (auth()->check()) {
+            $user = auth()->user();
+            $allApiaries = $user->apiaries()->latest()->get();
+            $apiaries = $user->apiaries()->latest()->filter(request(['search']))->paginate(4);
 
             // Pobierz wszystkie id apiaries
             $apiaryIds = $apiaries->pluck('id')->toArray();
@@ -29,19 +30,44 @@ class ApiaryController extends Controller
 
             // Liczba wszystkich ramek w ulach
             $totalFrames = $beehives->sum('frames');
-        }
-        else{
-            $apiaries = collect(); // Jeżeli nie jest zalogowany zwracana jest pusta kolekcja pasiek
-            $beehives = collect();
-            $totalFrames = 0;
+
+
+            // Pobierz dane pogodowe dla pasiek
+            $weatherData = $this->getWeatherData($apiaries);
+
+            // Zmapuj dane pogodowe i ikony do pasiek
+            $apiariesWithWeather = $apiaries->map(function ($apiary) use ($weatherData) {
+                $apiaryWeatherData = null;
+                foreach ($weatherData as $item) {
+                    if ($item['apiary_id'] === $apiary->id) {
+                        $apiaryWeatherData = $item['weather_data'];
+                        break;
+                    }
+                }
+                $apiary->weather_data = $apiaryWeatherData;
+                $apiary->weather_icon = $this->getWeatherIcon($apiaryWeatherData);
+                return $apiary;
+            });
         }
 
-        return view('apiaries.index', [
-            'apiaries' => $apiaries,
-            'beehives' => $beehives,
-            'totalFrames' => $totalFrames
-        ]);
-    }
+        else{
+                $apiaries = collect(); // Jeżeli nie jest zalogowany zwracana jest pusta kolekcja pasiek
+                $beehives = collect();
+                $totalFrames = 0;
+                $apiariesWithWeather = collect();
+                $allApiaries = collect();
+            }
+
+            return view('apiaries.index', [
+                'apiaries' => $apiariesWithWeather,
+                'originalApiaries' => $apiaries, // Przekazanie oryginalnych apiaries do widoku dla paginacji
+                'allApiaries' => $allApiaries,
+                'beehives' => $beehives,
+                'totalFrames' => $totalFrames
+            ]);
+
+        }
+
 
     /**
      * Show the form for creating a new resource.
@@ -77,6 +103,21 @@ class ApiaryController extends Controller
 
         $formFields['user_id'] = auth()->id();
 
+        $coordinates = $this->getGeoCoordinates(
+            $request->input('street_number'),
+            $request->input('street_name'),
+            $request->input('city'),
+            $request->input('country')
+        );
+
+        if ($coordinates) {
+            $formFields['latitude'] = $coordinates['latitude'];
+            $formFields['longitude'] = $coordinates['longitude'];
+        }
+
+
+//        dd($formFields);
+
         $apiary = Apiary::create($formFields);
 
         $apiary->floras()->sync($request->input('flora', [])); //pobranie tablicy wartości dla flora z requesta i zsychnronizowanie z relacją
@@ -92,8 +133,22 @@ class ApiaryController extends Controller
     {
         $this->authorize('view', $apiary); // sprawdź czy pasieka którą użytkownik próbuje wyświetlić należy faktycznie do niego, więcej w app/Policies/ApiaryPolicy
 
+        // Pobierz dane pogodowe dla tej pasieki
+        $weatherDataCollection = $this->getWeatherData(collect([$apiary]));
+
+        // Wyciągnij dane pogodowe dla tej pasieki
+        $weatherData = null;
+        if ($weatherDataCollection->isNotEmpty()) {
+            $weatherData = $weatherDataCollection->first()['weather_data'];
+        }
+
+        // Pobieramy odpowiednią ikonę pogodową
+        $weatherIcon = $this->getWeatherIcon($weatherData);
+
         return view('apiaries.show', [
-            'apiary' => $apiary
+            'apiary' => $apiary,
+            'weatherData' => $weatherData,
+            'weatherIcon' => $weatherIcon,
         ]);
     }
 
@@ -165,4 +220,101 @@ class ApiaryController extends Controller
     public function manage(){
         return view('apiaries.manage', ['apiaries' => auth()->user()->apiaries()->with('beehives')->get()]);
     }
+
+
+
+    //    Function for geocoding asddress
+    private function getGeoCoordinates($street_number, $street_name, $city, $country) {
+        $address = ($street_name === $city) ? "{$street_name} {$street_number}, {$country}" : "{$street_name} {$street_number}, {$city}, {$country}";
+        $address = urlencode($address);
+
+        $url = "https://nominatim.openstreetmap.org/search?format=json&q={$address}";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'YourAppName/1.0 (Your contact information)'); // Zastąp 'YourAppName/1.0 (Your contact information)' swoją nazwą aplikacji i danymi kontaktowymi
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $data = json_decode($response);
+
+        if (!empty($data[0])) {
+            $lat = $data[0]->lat;
+            $lng = $data[0]->lon;
+
+            return ['latitude' => $lat, 'longitude' => $lng];
+        }
+
+        return null;
+    }
+
+    // Pobierz dane pogodowe na podstawie współrzędnych pasieki
+    private function getWeatherData($apiaries)
+    {
+        $apiariesWeather = collect();
+        $apiKey = "6d2262bd13338370a8cd281f4b99e76c";
+
+        foreach ($apiaries as $apiary) {
+            if ($apiary->latitude && $apiary->longitude) {
+                $lat = $apiary->latitude;
+                $lon = $apiary->longitude;
+
+                $url = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey&units=metric";
+
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_HTTPGET, 1);
+
+                $weatherData = curl_exec($ch);
+
+                if ($weatherData === false) {
+                    // Możesz tutaj dodać logowanie błędów
+                    continue;
+                }
+
+                $weatherData = json_decode($weatherData);
+                curl_close($ch);
+
+                $apiariesWeather->push([
+                    'apiary_id' => $apiary->id,
+                    'weather_data' => $weatherData
+                ]);
+            }
+        }
+
+        return $apiariesWeather;
+    }
+
+    private function getWeatherIcon($weatherData)
+    {
+        $weatherCode = $weatherData->weather[0]->id ?? null;
+
+        if ($weatherCode >= 200 && $weatherCode < 300) {
+            return 'fas fa-bolt';
+        } elseif ($weatherCode >= 300 && $weatherCode < 400) {
+            return 'fas fa-cloud-rain';
+        } elseif ($weatherCode >= 500 && $weatherCode < 600) {
+            return 'fas fa-cloud-showers-heavy';
+        } elseif ($weatherCode >= 600 && $weatherCode < 700) {
+            return 'fas fa-snowflake';
+        } elseif ($weatherCode >= 700 && $weatherCode < 800) {
+            return 'fas fa-smog';
+        } elseif ($weatherCode == 800) {
+            return 'fas fa-sun';
+        } elseif ($weatherCode == 801) {
+            return 'fas fa-cloud-sun';
+        } elseif ($weatherCode >= 802 && $weatherCode < 805) {
+            return 'fas fa-cloud';
+        } else {
+            return 'fas fa-question';
+        }
+    }
+
+
+
+
+
 }

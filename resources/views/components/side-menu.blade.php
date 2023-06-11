@@ -83,6 +83,14 @@
                         </a>
                     </li>
                     <li class="pt-2">
+                        <a
+                            class="bg-yellow-800 py-1 px-3 rounded hover:bg-yellow-400"
+                            href="{{route('honeyharvests_index')}}"
+                        >
+                            <i class="fa-solid fa-jar"></i> Rejestr zbiorów miodu
+                        </a>
+                    </li>
+                    <li class="pt-2">
                         <form class="inline" method="POST" action="/logout">
                             @csrf
                             <button type="submit" class="text-gray-200 hover:text-white">

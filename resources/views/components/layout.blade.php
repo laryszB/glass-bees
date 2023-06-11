@@ -4,6 +4,10 @@
 
     <link rel="icon" href="images/bee_icon.png">
 
+    {{--    LEAFLET JAVASCRIPT FOR MAPS--}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@latest/dist/leaflet.js"></script>
+
     {{--    CHART JS--}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 

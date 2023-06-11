@@ -21,9 +21,29 @@
                         </div>
                     </a>
                 </h3>
-                <div class="text-xl font-bold mb-4 text-blue-400">
-                    <i class="fa-solid fa-cloud-sun" style="color: #60A5FA;"></i>   Pogoda
+                <div class="text-xl font-semibold mb-4 text-blue-400">
+                    @if ($weatherData)
+                        <div class="weather-info">
+
+                            <!-- Ikona -->
+                            <div class="weather-icon " style="height: 3.6em;">
+                                <i class="{{ $weatherIcon }}" style="font-size: 3em;"></i>
+                            </div>
+                            <!-- Dane pogodowe -->
+                            <div class="weather-data ml-4">
+                                <div><i class="fa-solid fa-temperature-full"></i> Temperatura: <span class="font-bold">{{ $weatherData->main->temp ?? 'N/A' }}°C</span></div>
+                                <div><i class="fa-solid fa-droplet"></i> Wilgotność: <span class="font-bold">{{ $weatherData->main->humidity ?? 'N/A' }}%</span></div>
+                                <div><i class="fa-solid fa-wind"></i> Prędkość wiatru: <span class="font-bold">{{ $weatherData->wind->speed ?? 'N/A' }} m/s</span></div>
+                            </div>
+
+                        </div>
+                    @else
+                        <div class="weather-info">
+                            <div>Brak danych pogodowych dla tej pasieki <i data-tippy-content="Brak informacji o pogodzie może wynikać z błędnego adresu pasieki. Upewnij się, że wprowadziłeś prawidłowy adres." class="fa-solid fa-circle-info"></i></div>
+                        </div>
+                    @endif
                 </div>
+
                 <div class="text-xl font-semibold text-green-700 mb-4 max-w-lg">
                     <i class="fa-solid fa-seedling" style="color: #15803d;"></i>
                     Roślinność:

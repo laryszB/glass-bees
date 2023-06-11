@@ -2,6 +2,8 @@
     @include('partials._hero')
 
     @auth
+
+        @include('partials._apiaries_map')
         @include('partials._user_statistics_info')
         @include('partials._search')
 
@@ -16,7 +18,7 @@
         </div>
 
         <div class="mt-6 p-4 flex justify-end">
-            {{$apiaries->links()}}
+            {{ $originalApiaries->links() }}
         </div>
         @else
             <p class="text-center">Nie posiadasz żadnych pasiek</p>
