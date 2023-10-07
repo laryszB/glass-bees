@@ -88,7 +88,7 @@ Route::get('/feedings/create', [FeedingController::class, 'create'])->middleware
 Route::post('/feedings/store', [FeedingController::class, 'store'])->middleware('auth')->name('feedings_store');
 
 // View all feeding
-Route::get('/feedings', [FeedingController::class, 'index'])->middleware('auth')->name('feedings_list');
+Route::get('/feedings', [FeedingController::class, 'index'])->middleware('auth')->name('feedings_index');
 
 // Delete feeding
 Route::delete('/feedings/{beehive_id}/{food_id}/delete', [FeedingController::class, 'destroy'])->middleware('auth')->name('feedings_destroy');

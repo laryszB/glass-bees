@@ -2,11 +2,13 @@
 
 <x-card>
     <div class="flex">
-        <img
-            class="hidden w-52 mr-6 md:block"
-            src="{{$apiary->photo ? asset('storage/' . $apiary->photo) : asset('images/apiary_logo.png')}}"
-            alt=""
-        />
+        <div class="w-52 h-52 mr-6 hidden md:block relative">
+            <img
+                class="w-full h-full object-cover"
+                src="{{$apiary->photo ? asset('storage/' . $apiary->photo) : asset('images/apiary_logo.png')}}"
+                alt=""
+            />
+        </div>
         <div>
             <h3 class="text-2xl">
                 <a href="/apiaries/{{$apiary->id}}">

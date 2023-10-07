@@ -19,6 +19,17 @@ class HoneyHarvestController extends Controller
                 $query->orderBy('harvest_date', 'asc');
             }])->get(); // Pobierz pasieki zalogowanego użytkownika razem z posortowanymi zbiorami
 
+            $anyHarvests = false;
+
+            foreach ($apiaries as $apiary) {
+                foreach ($apiary->honeyHarvests as $honeyHarvest) {
+                    if ($honeyHarvest) {
+                        $anyHarvests = true;
+                        break 2;
+                    }
+                }
+            }
+
             $apiariesWithHarvestsGroupedByYear = $apiaries->map(function ($apiary) {
                 $harvestsGroupedByYear = $apiary->honeyHarvests->groupBy(function ($date) {
                     return date('Y', strtotime($date->harvest_date)); // grupowanie po roku
@@ -40,7 +51,8 @@ class HoneyHarvestController extends Controller
 
             return view('honey_harvests.index', [
                 'apiaries' => $apiariesWithHarvestsGroupedByYear,
-                'years' => $years
+                'years' => $years,
+                'anyHarvests' => $anyHarvests
             ]);
         } else {
             abort(403);
@@ -55,7 +67,7 @@ class HoneyHarvestController extends Controller
     {
         if (auth()->check()) {         // Sprawdzenie czy użytkownik jest zalogowany
             $user = auth()->user(); // Pobierz dane zalogowanego użytkownika
-            $apiaries = $user->apiaries()->get(); //Pobierz pasieki zalogowanego użytkownika
+            $apiaries = $user->apiaries()->whereHas('beehives')->get(); //Pobierz pasieki zalogowanego użytkownika
 
             return view('honey_harvests.create', [
                 'apiaries' => $apiaries,

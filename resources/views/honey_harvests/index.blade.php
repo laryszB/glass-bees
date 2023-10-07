@@ -3,10 +3,10 @@
         <h1 class="text-4xl font-bold uppercase">Rejestr zbiorów miodu <i class="fa-solid fa-jar"></i></h1>
     </div>
 
-    @if(count($apiaries) === 0)
+    @if(!$anyHarvests)
         <div class="flex flex-col items-center mt-6">
             <p>Nie zarejestrowałeś jeszcze żadnego zbioru miodu.</p>
-            <span class="text-fuchsia-600 hover:text-fuchsia-400"><a href="{{route('honeyharvests_create')}}">Chcesz to zrobić? <i class="fa-solid fa-utensils"></i></a></span>
+            <span class="text-yellow-600 hover:text-yellow-400"><a href="{{route('honeyharvests_create')}}">Chcesz to zrobić? <i class="fa-solid fa-jar"></i></a></span>
         </div>
     @else
         <div class="divide-y divide-gray-400 max-w-4xl mx-auto mt-8 text-white">

@@ -53,7 +53,7 @@
                     <li>
                         <a
                             class="bg-purple-900 py-1 px-3 rounded hover:bg-purple-800"
-                            href="{{route('feedings_list')}}"
+                            href="{{route('feedings_index')}}"
                         >
                             <i class="fa-solid fa-utensils"></i> Rejestr karmień
                         </a>

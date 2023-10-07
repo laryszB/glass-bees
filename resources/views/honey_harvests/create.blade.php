@@ -13,7 +13,8 @@
                 <h2 class="text-2xl text-yellow-900 font-bold uppercase mb-1">
                     Zarejestruj zbiór miodu <i class="fa-solid fa-jar"></i>
                 </h2>
-                <p class="mb-4 text-yellow-900">Tutaj możesz zarejestrować zbiór miodu w danej pasiece</p>
+                <p class="text-yellow-900">Tutaj możesz zarejestrować zbiór miodu w danej pasiece</p>
+                <p class="mb-4 text-orange-600"><a href="{{route('honeyharvests_index')}}">Chcesz przejść do rejestru? <i class="fa-solid fa-arrow-right"></i></a></p>
             </header>
 
             <form method="POST" action="{{route("honeyharvests_store")}}">
@@ -22,7 +23,7 @@
                     <label
                         for="apiary_id"
                         class="inline-block text-lg mb-2 text-yellow-900"
-                    >Wybierz pasiekę</label
+                    >Wybierz pasiekę <i data-tippy-content="Jeżeli nie widzisz którejś ze swoich pasiek, oznacza to, że owa pasieka nie posiada żadnych uli. Dodaj ule, aby była tutaj widoczna." class="fa-solid fa-circle-info"></i></label
                     >
                     <select name="apiary_id" id="apiary_id" class="border border-gray-600 rounded p-2 w-full bg-gray-300">
                         @foreach ($apiaries as $apiary)

@@ -23,7 +23,7 @@
         <li>
             <a
                 class="text-black bg-gray-700 hover:bg-gray-600 text-white py-1 px-3 block whitespace-no-wrap font-medium"
-                href="{{route('feedings_list')}}"
+                href="{{route('feedings_index')}}"
             >
                 <i class="fa-solid fa-utensils"></i> Rejestr karmień
             </a>

@@ -4,7 +4,7 @@
     </div>
     @unless($apiaries->isEmpty())
     @foreach ($apiaries as $apiary)
-        <div class="overflow-x-auto shadow-md sm:rounded-lg mx-10 mb-6">
+        <div class="overflow-x-auto shadow-md sm:rounded-lg mx-60 mb-6">
             <div class="flex justify-center text-lg text-white font-bold w-fit bg-amber-900 px-4 p-1 mb-1">
                 <h1>PASIEKA: {{$apiary->name}}</h1>
             </div>
@@ -47,7 +47,7 @@
                         </a>
                     </td>
                     <td class="px-6 py-4 text-right">
-                        <x-delete-form action="{{route('beehives_delete', ['apiary'=>$apiary, 'beehive' => $beehive])}}">
+                        <x-delete-form class="text-red-500" action="{{route('beehives_delete', ['apiary'=>$apiary, 'beehive' => $beehive])}}">
                         </x-delete-form>
                         </td>
                 </tr>

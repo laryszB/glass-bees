@@ -13,7 +13,8 @@
                 <h2 class="text-2xl text-white font-bold uppercase mb-1">
                     Zarejestruj karmienie <i class="fa-solid fa-utensils"></i>
                 </h2>
-                <p class="mb-4 text-white">Tutaj możesz odnotować karmienie, którego dokonałeś w wybranej pasiece i w wybranych ulach</p>
+                <p class="mb-1 text-white">Tutaj możesz odnotować karmienie, którego dokonałeś w wybranej pasiece i w wybranych ulach</p>
+                <p class="mb-4 text-gray-300"><a href="{{route('feedings_index')}}">Chcesz przejść do rejestru? <i class="fa-solid fa-arrow-right"></i></a></p>
             </header>
 
             <form method="POST" action="/feedings/store">

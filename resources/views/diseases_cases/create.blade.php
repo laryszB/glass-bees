@@ -13,7 +13,8 @@
                 <h2 class="text-2xl text-white font-bold uppercase mb-1">
                     Odnotuj chorobę <i class="fa-solid fa-syringe"></i>
                 </h2>
-                <p class="mb-4 text-white">Tutaj możesz odnotować chorobę, która dotyka Twoją rodzinę pszczelą w danym ulu</p>
+                <p class="mb-1 text-white">Tutaj możesz odnotować chorobę, która dotyka Twoją rodzinę pszczelą w danym ulu</p>
+                <p class="mb-4 text-gray-300"><a href="{{route('diseasescases_index')}}">Chcesz przejść do rejestru? <i class="fa-solid fa-arrow-right"></i></a></p>
             </header>
 
             <form method="POST" action="{{route('diseasescases_store')}}">

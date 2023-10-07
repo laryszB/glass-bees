@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('beehive_id')->constrained()->onDelete('cascade');
             $table->timestamp('inspection_date');
             $table->enum('status', ['ok', 'umiarkowane zagrożenie', 'poważne zagrożenie']);
+            $table->enum('danger', ['brak matki', 'brak pożywienia', 'choroba', 'pasożyty']);
             $table->longText('note');
         });
     }

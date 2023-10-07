@@ -3,19 +3,41 @@
     <a href="/" class="inline-block text-black ml-4 mb-4"
     ><i class="fa-solid fa-arrow-left"></i> Back
     </a>
-    <div class="mx-60 shadow-md min-w-fit">
+    <div class="mx-60 shadow-md min-w-fit relative">
         <x-card>
+            <div x-data="{ open: false }" class="absolute right-0 top-0 mt-2 mr-2">
+                <button
+                    @click="open = !open"
+                    class="bg-yellow-300 text-black font-bold py-1 px-10 rounded inline-flex items-center hover:bg-yellow-400"
+                >
+                    <i class="fa-solid fa-caret-down"></i>
+                </button>
+                <ul
+                    x-show="open"
+                    x-cloak
+                    @click.away="open = false"
+                    class="absolute pt-1 z-20 w-full"
+                >
+                    <li>
+                        <a href="/apiaries/{{$apiary->id}}/edit" class="text-black text-center bg-yellow-300 hover:bg-yellow-400 py-1 px-3 block whitespace-no-wrap font-medium w-full"> <i class="fa-solid fa-pen"></i> Edytuj</a>
+                    </li>
+                    <li>
+                        <x-delete-form class="text-black bg-yellow-300 hover:bg-yellow-400 py-1 px-3 block whitespace-no-wrap font-medium w-full" action="/apiaries/{{$apiary->id}}">
+                        </x-delete-form>
+                    </li>
+                </ul>
+            </div>
             <div
                 class="flex flex-col items-center justify-center text-center"
             >
                 <img
-                    class="w-48 mb-6"
+                    class="w-48 mb-6 mt-4"
                     src="{{$apiary->photo ? asset('storage/' . $apiary->photo) : asset('images/apiary_logo.png')}}"
                     alt=""
                 />
 
                 <h3 class="text-2xl">
-                        <div class="rounded px-6 py-1 mb-2 text-center w-fit text-amber-500">
+                        <div class="rounded px-6 py-1 mb-2 text-center w-fit text-yellow-400">
                             <span class="font-semibold">{{$apiary->name}}</span>
                             <i class="fa-solid fa-wheat-awn"></i>
                         </div>
@@ -84,32 +106,10 @@
                 <div class="border border-gray-200 w-full mb-6 mt-4"></div>
                 <ul class="flex lg:flex-row flex-col">
                     <li
-                        class="flex  items-center justify-center bg-sky-700 hover:bg-sky-600 text-white rounded py-1 px-3 mr-2 text-xs"
-                    >
-                        <a href="/apiaries/{{$apiary->id}}/edit" class="text-base uppercase">Edytuj pasiekę
-                            <i class="fa-solid fa-pencil"></i>
-                        </a>
-                    </li>
-
-                    <li
-                        class="flex items-center justify-center bg-red-700 hover:bg-red-600 text-white rounded py-1 px-3 mr-20"
-                    >
-                        <x-delete-form class="text-white text-lg uppercase" action="/apiaries/{{$apiary->id}}">
-                        </x-delete-form>
-                    </li>
-
-                    <li
-                        class="flex items-center justify-center bg-sky-900 hover:bg-sky-700 text-white rounded py-1 px-3 mr-2 text-xs"
+                        class="flex items-center justify-center bg-amber-900 hover:bg-amber-700 text-white rounded py-1 px-3 mr-2 text-xs"
                     >
                         <a href="{{ route('beehives_index', ['apiary' => $apiary->id]) }}" class="text-base uppercase">Wyświetl ule
                             <i class="fa-brands fa-hive"></i>
-                        </a>
-                    </li>
-                    <li
-                        class="flex items-center justify-center bg-emerald-900 hover:bg-emerald-700 text-white rounded py-1 px-3 mr-2 text-xs"
-                    >
-                        <a href="{{ route('beehives_create', ['apiary' => $apiary->id]) }}" class="text-base uppercase">Dodaj ul
-                            <i class="fa-solid fa-plus fa-lg"></i>
                         </a>
                     </li>
                 </ul>
