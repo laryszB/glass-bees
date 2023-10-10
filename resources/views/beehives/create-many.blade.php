@@ -5,57 +5,41 @@
     >
         <header class="text-center">
             <h2 class="text-2xl text-white font-bold uppercase mb-1">
-                Edytuj ul
+                Seryjne tworzenie uli
             </h2>
-            <p class="mb-4 text-white">Edytuj swój istniejący ul
-                <span class="font-bold">{{$beehive->name}}
-                </span>
-            należący do pasieki
-                <span class="font-bold">{{$apiary->name}}
-                </span>
-            </p>
+            <p class="mb-4 text-white">Ule zostaną przypisane do Twojej pasieki</p>
         </header>
 
-        <form method="POST" action="{{ route('beehives_update', ['apiary' => $apiary, 'beehive' => $beehive]) }}">
+        <form method="POST" action="{{ route('beehives_store_many', $apiary) }}">
             @csrf
-            @method('PUT')
             <div class="mb-6">
-                <label
-                    for="name"
-                    class="inline-block text-lg mb-2 text-white"
-                >Nazwa ula</label
-                >
-                <input
-                    type="text"
-                    class="border border-gray-600 rounded p-2 w-full bg-gray-300"
-                    name="name"
-                    value="{{$beehive->name}}"
-                />
+                <label for="beehive_numbers" class="text-lg mb-2 text-white">Numery uli</label>
+                <select id="beehive_numbers" name="beehive_numbers[]" multiple class="border rounded px-4 py-2 mb-2">
+                    @for ($i = 1; $i <= 100; $i++)
+                        <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
+                </select>
 
-                @error('name')
+                <div class="flex mb-2 ">
+                    <input type="number" id="minNumber" placeholder="1" class="border rounded px-4 mr-2" min="1" max="100">
+                    <input type="number" id="maxNumber" placeholder="100" class="border rounded px-4 mr-2" min="1" max="100">
+                    <button type="button" id="selectRange" class="bg-amber-600 text-white px-4 rounded hover:bg-amber-500">Dodaj</button>
+                    <button type="button" id="clearSelection" class="bg-red-700 text-white px-4 rounded ml-2 hover:bg-red-600">Wyczyść</button>
+                </div>
+
+                <div id="messageBox" class="message-box hidden">
+                    <div class="message-content bg-white p-4 border rounded-lg shadow-md">
+                        <p id="messageText"></p>
+                        <button type="button" id="closeMessage" class="bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600">Zamknij</button>
+                    </div>
+                </div>
+
+                @error('flora')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                 @enderror
             </div>
 
-            <div class="mb-6">
-                <label
-                    for="description"
-                    class="inline-block text-lg mb-2 text-white"
-                >
-                    Opis ula
-                </label>
-                <textarea
-                    class="border border-gray-600 rounded p-2 w-full bg-gray-300"
-                    name="description"
-                    rows="10"
-                    placeholder="Zamieść tu przydatny dla Ciebie opis ula"
-                >{{$beehive->description}}</textarea>
 
-                @error('description')
-                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-                @enderror
-
-            </div>
 
             <div class="mb-6">
                 <label for="type" class="inline-block text-lg mb-2 text-white"
@@ -66,7 +50,7 @@
                     class="border border-gray-600 rounded p-2 w-full bg-gray-300"
                     name="type"
                     placeholder=""
-                    value="{{$beehive->type}}"
+                    value="{{old('type')}}"
                 />
 
                 @error('type')
@@ -87,7 +71,7 @@
                     class="border border-gray-600 rounded p-2 w-full bg-gray-300"
                     name="bodies"
                     placeholder=""
-                    value="{{$beehive->bodies}}"
+                    value="{{old('bodies')}}"
                 />
 
                 @error('bodies')
@@ -104,7 +88,7 @@
                     type="text"
                     class="border border-gray-600 rounded p-2 w-full bg-gray-300"
                     name="bottoms"
-                    value="{{$beehive->bottoms}}"
+                    value="{{old('bottoms')}}"
                 />
 
                 @error('bottoms')
@@ -125,7 +109,7 @@
                     min="0"
                     class="border border-gray-600 rounded p-2 w-full bg-gray-300"
                     name="extensions"
-                    value="{{$beehive->extensions}}"
+                    value="{{old('extensions')}}"
                 />
 
                 @error('extensions')
@@ -144,7 +128,7 @@
                     class="border border-gray-600 rounded p-2 w-full bg-gray-300"
                     name="half_extensions"
                     placeholder=""
-                    value="{{$beehive->half_extensions}}"
+                    value="{{old('half_extensions')}}"
                 />
 
                 @error('half_extensions')
@@ -163,7 +147,7 @@
                     class="border border-gray-600 rounded p-2 w-full bg-gray-300"
                     name="frames"
                     placeholder=""
-                    value="{{$beehive->frames}}"
+                    value="{{old('frames')}}"
                 />
 
                 @error('frames')
@@ -176,47 +160,28 @@
                 <label for="beehive_accessory" class="inline-block text-lg mb-2 text-white">Akcesoria</label>
                 <select id="beehive_accessory" name="beehive_accessory[]" multiple>
                     @foreach($beehiveAccessories as $beehiveAccessory)
-                        <option class="slim-select-option" value="{{ $beehiveAccessory->id }}" @if($beehive->beehiveAccessories->contains($beehiveAccessory->id)) selected @endif>{{ $beehiveAccessory->name }}</option>
+                        <option value="{{ $beehiveAccessory->id }}">{{ $beehiveAccessory->name }}</option>
                     @endforeach
                 </select>
 
-                @error('flora')
+                @error('beehive_accessory')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                 @enderror
 
             </div>
 
             <div class="mb-6">
-                <label
-                    for="note"
-                    class="inline-block text-lg mb-2 text-white"
-                >
-                    Notatka
-                </label>
-                <textarea
-                    class="border border-gray-600 rounded p-2 w-full bg-gray-300"
-                    name="note"
-                    rows="10"
-                    placeholder="Zamieść tu przydatny dla Ciebie opis ula"
-                >{{$beehive->note}}</textarea>
-
-                @error('note')
-                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-                @enderror
-
-            </div>
-
-
-            <div class="mb-6">
-                <button
+                <button type="submit"
                     class="bg-laravel text-white rounded py-2 px-4 hover:bg-white hover:text-black"
                 >
-                    Zatwierdź edycję
+                    Utwórz ule
                 </button>
 
-                <a href="{{route('beehives_index', [$apiary])}}" class="text-white ml-4"> Powrót </a>
+                <a href="/" class="text-white ml-4"> Powrót </a>
             </div>
         </form>
     </x-card>
+
+    @vite('resources/js/beehive_numbers.js')
 
 </x-layout>

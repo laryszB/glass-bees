@@ -36,13 +36,5 @@
                 <i class="fa-brands fa-hive"></i> Zarządzaj ulami
             </a>
         </li>
-        <li>
-            <a
-                class="bg-amber-100 hover:bg-amber-300 py-1 px-3 block whitespace-no-wrap font-medium"
-                href="{{route('inspections_index')}}"
-            >
-                <i class="fa-solid fa-clipboard-check"></i> Przegląd
-            </a>
-        </li>
     </ul>
 </div>

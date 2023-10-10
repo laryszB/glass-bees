@@ -76,6 +76,7 @@
                 >
                 <input
                     type="number"
+                    min="0"
                     class="border border-gray-600 rounded p-2 w-full bg-gray-300"
                     name="bodies"
                     placeholder=""
@@ -114,6 +115,7 @@
                 </label>
                 <input
                     type="number"
+                    min="0"
                     class="border border-gray-600 rounded p-2 w-full bg-gray-300"
                     name="extensions"
                     value="{{old('extensions')}}"
@@ -131,6 +133,7 @@
                 </label>
                 <input
                     type="number"
+                    min="0"
                     class="border border-gray-600 rounded p-2 w-full bg-gray-300"
                     name="half_extensions"
                     placeholder=""
@@ -149,6 +152,7 @@
                 </label>
                 <input
                     type="number"
+                    min="0"
                     class="border border-gray-600 rounded p-2 w-full bg-gray-300"
                     name="frames"
                     placeholder=""
@@ -169,7 +173,7 @@
                     @endforeach
                 </select>
 
-                @error('flora')
+                @error('beehive_accessory')
                 <p class="text-red-500 text-xs mt-1">{{$message}}</p>
                 @enderror
 
@@ -194,27 +198,6 @@
                 @enderror
 
             </div>
-
-            <div class="mb-6" >
-                <label for="quantity" class="inline-block text-lg mb-2 text-white">
-                    Liczba uli (max 10) <i data-tippy-content="Wybierz liczbę kopii, które chcesz utworzyć. Możesz później dowolnie edytować szczegóły każdego ula." class="fa-solid fa-circle-info" id="info-icon"></i>
-                </label>
-                <input
-                    type="number"
-                    class="border border-gray-600 rounded p-2 w-full bg-gray-300"
-                    name="quantity"
-                    placeholder=""
-                    value="1"
-                    min="1"
-                    max="10"
-                />
-
-                @error('quantity')
-                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-                @enderror
-
-            </div>
-
 
             <div class="mb-6">
                 <button

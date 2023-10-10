@@ -57,8 +57,14 @@ Route::get('/apiaries/{apiary}/beehives', [BeehiveController::class, 'index'])->
 // Store beehvie data
 Route::post('/apiaries/{apiary}/beehives/store', [BeehiveController::class, 'store'])->middleware('auth')->name('beehives_store');
 
+// Store many beehvies data
+Route::post('/apiaries/{apiary}/beehives/store-many', [BeehiveController::class, 'storeMany'])->middleware('auth')->name('beehives_store_many');
+
 //Show create beehive form
 Route::get('/apiaries/{apiary}/beehives/create', [BeehiveController::class, 'create'])->middleware('auth')->name('beehives_create');
+
+//Show create many beehives form
+Route::get('/apiaries/{apiary}/beehives/create-many', [BeehiveController::class, 'createMany'])->middleware('auth')->name('beehives_create_many');
 
 //Show edit beehive form
 Route::get('/apiaries/{apiary}/beehives/{beehive}/edit', [BeehiveController::class, 'edit'])->middleware('auth')->name('beehives_edit');

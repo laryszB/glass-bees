@@ -40,15 +40,20 @@ class BeehiveController extends Controller
         return view('beehives.create', compact('apiary', 'beehiveAccessories'));
     }
 
+    public function createMany(Apiary $apiary)
+    {
+        $this->authorize('create', [Beehive::class, $apiary]); //sprawdź czy użytkownik dodaje ul do swojej pasieki
+
+        $beehiveAccessories = BeehiveAccessory::all();
+
+        return view('beehives.create-many', compact('apiary', 'beehiveAccessories'));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request, Apiary $apiary)
     {
-        $request->validate(['quantity' => ['required', 'integer', 'min:1', 'max:10']]);
-
-        $quantity = $request->input('quantity');
-
         $formFields = $request->validate([
             'name' => ['required', 'max:255'],
             'description' => ['required'],
@@ -66,15 +71,39 @@ class BeehiveController extends Controller
 
         $formFields['apiary_id'] = $apiary->id;
 
-
-
-        for ($i = 0; $i < $quantity; $i++){
-            $beehive = Beehive::create($formFields);
-            $beehive->beehiveAccessories()->sync($request->input('beehive_accessory', [])); //pobranie tablicy wartości dla beehiveAccessory z requesta i zsychnronizowanie z relacją
-        }
+        $beehive = Beehive::create($formFields);
+        $beehive->beehiveAccessories()->sync($request->input('beehive_accessory', [])); //pobranie tablicy wartości dla beehiveAccessory z requesta i zsychnronizowanie z relacją
 
         return redirect()->route('beehives_index', ['apiary'=>$apiary])->with('message', 'Ul został pomyślnie utworzony');
     }
+
+    public function storeMany(Request $request, Apiary $apiary)
+    {
+        $beehive_numbers = $request->input('beehive_numbers');
+
+        $formFields = $request->validate([
+            'type' => ['required', 'max:255'],
+            'bodies' => ['required', 'numeric', 'integer'],
+            'bottoms' => ['required', 'max:255'],
+            'extensions' => ['required', 'numeric', 'integer'],
+            'half_extensions' => ['required', 'numeric', 'integer'],
+            'frames' => ['required', 'numeric', 'integer'],
+            'beehive_accessory' => ['array', 'min:1'],
+        ]);
+
+        $formFields['apiary_id'] = $apiary->id;
+        $formFields['note'] = '';
+        $formFields['description'] = '';
+
+        foreach ($beehive_numbers as $beehive_number) {
+            $formFields['name'] = "Ul " . $beehive_number;
+            $beehive = Beehive::create($formFields);
+            $beehive->beehiveAccessories()->sync($request->input('beehive_accessory', [])); // Pobranie tablicy wartości dla beehiveAccessory z requesta i zsynchronizowanie z relacją
+        }
+
+        return redirect()->route('beehives_index', ['apiary' => $apiary])->with('message', 'Ule zostały pomyślnie utworzone');
+    }
+
 
     /**
      * Display the specified resource.

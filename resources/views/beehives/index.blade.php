@@ -15,6 +15,9 @@
             <a class="bg-orange-900 px-4 py-2 rounded text-lg text-white hover:bg-orange-700 text-center font-bold" href="{{ route('beehives_create', $apiary) }}">
                 Dodaj nowy ul <i class="fa-solid fa-plus"></i>
             </a>
+            <a class="bg-orange-900 px-4 py-2 rounded text-lg text-white hover:bg-orange-700 text-center font-bold" href="{{ route('beehives_create_many', $apiary) }}">
+                Dodaj wiele uli <i class="fa-regular fa-square-plus fa-lg"></i>
+            </a>
             <button @click="showDetails = !showDetails" class="bg-orange-900 hover:bg-orange-700 text-white text-lg font-bold py-2 px-4 rounded">
                 Szczegóły uli <i class="fa-solid fa-up-down"></i>
             </button>
@@ -30,7 +33,7 @@
                                 <i class="fa-regular fa-note-sticky text-white hover:text-amber-200 hover:cursor-pointer fa-xl" @click="showModal = true"></i>
                             </div>
                         </div>
-                        <div x-cloak x-show="showDetails">
+                        <div x-cloak x-show="showDetails" class="break-normal">
                             <div class="flex justify-between items-center mb-4">
                                 <p class="text-gray-400 text-lg pr-6">Typ ula:</p>
                                 <p class="text-gray-100 text-lg">{{$beehive->type}}</p>

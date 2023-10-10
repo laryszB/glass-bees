@@ -14,11 +14,11 @@
     </button>
 
     <div x-show="confirmDelete" x-cloak class="fixed inset-0 flex items-center justify-center bg-black text-black bg-opacity-50">
-        <div class="bg-white p-6 rounded">
+        <div class="bg-laravel p-6 rounded text-white">
             <p>Czy na pewno chcesz usunąć?</p>
             <div class="mt-4 flex justify-end">
-                <button class="mr-2" @click.prevent="confirmDelete = false">Anuluj</button>
-                <button type="submit" class="text-red-500">Potwierdź</button>
+                <button type="submit" class="text-white mr-2 p-1 bg-red-600 rounded">Potwierdź</button>
+                <button class="bg-purple-600 p-1 rounded" @click.prevent="confirmDelete = false">Anuluj</button>
             </div>
         </div>
     </div>
