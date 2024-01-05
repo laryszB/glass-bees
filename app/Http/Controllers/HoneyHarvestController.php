@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Apiary;
 use App\Models\Beehive;
 use App\Models\HoneyHarvest;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class HoneyHarvestController extends Controller
 {
@@ -212,5 +214,17 @@ class HoneyHarvestController extends Controller
         ]);
     }
 
+    public function generateApiaryPDF(Request $request, $apiary_id)
+    {
+        // Pobierz dane pasieki i jej zbiorów
+        $apiary = Apiary::findOrFail($apiary_id);
+        $harvests = $apiary->honeyHarvests; // Pobierz wszystkie zbiory dla pasieki
+
+        // Generowanie raportu PDF
+        $pdf = PDF::loadView('pdf.pdf', ['apiary' => $apiary, 'harvests' => $harvests]);
+
+        // Zapisz lub wyślij raport PDF do użytkownika
+        return $pdf->stream('raport_pasieki_'.$apiary_id.'.pdf');
+    }
 
 }

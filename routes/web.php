@@ -156,8 +156,9 @@ Route::post('honeyharvests/store', [HoneyHarvestController::class, 'store'])->mi
 
 Route::delete('honeyharvests/{harvest}', [HoneyHarvestController::class, 'destroy'])->middleware('auth')->name('honeyharvests_destroy');
 
-// *INSPECTIONS*
-Route::get('inspections', [InspectionController::class, 'index'])->middleware('auth')->name('inspections_index');
+Route::get('honeyharvests/generate-pdf/{apiary}', [HoneyHarvestController::class, 'generateApiaryPDF'])->middleware('auth')->name('honeyharvests_pdf');
+
+
 
 
 //Show register/create form

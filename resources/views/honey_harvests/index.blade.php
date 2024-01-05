@@ -11,12 +11,16 @@
     @else
         <div class="divide-y divide-gray-400 max-w-4xl mx-auto mt-8 text-white">
             @foreach ($apiaries as $apiary)
-                <div class="py-4" x-data="{ apiaryOpen: false }">
-                    <h2 class="px-4 py-2 bg-yellow-800 cursor-pointer" @click="apiaryOpen = !apiaryOpen">
-                        <i class="fa-solid fa-wheat-awn"></i> {{ $apiary->name }}
-                        <i x-show="!apiaryOpen" class="fa-solid fa-chevron-down"></i>
-                        <i x-show="apiaryOpen" class="fa-solid fa-chevron-up"></i>
+                <div class="py-4" x-data="{ apiaryOpen: false }" x-cloak>
+                    <h2 class="px-4 py-2 bg-yellow-800 cursor-pointer flex justify-between items-center" @click="apiaryOpen = !apiaryOpen">
+                        <div>
+                            <i class="fa-solid fa-wheat-awn"></i> {{ $apiary->name }}
+                            <i x-show="!apiaryOpen" class="fa-solid fa-chevron-down"></i>
+                            <i x-show="apiaryOpen" class="fa-solid fa-chevron-up"></i>
+                        </div>
+                        <a x-show="apiaryOpen" href="{{ route('honeyharvests_pdf', ['apiary' => $apiary->id]) }}" target="_blank" class=""><i data-tippy-content="Generuj PDF z raportem" class="fa-solid fa-file-pdf fa-lg"></i></a>
                     </h2>
+
 
                     <div x-show="apiaryOpen" x-cloak>
                         @foreach ($apiary->harvestsGroupedByYear as $year => $harvests)
